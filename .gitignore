@@ -37,7 +37,7 @@ target
 
 # Output folders
 stats
-results
+#results
 
 # Big resource files
 src/main/resources/genes/*.gene_info*

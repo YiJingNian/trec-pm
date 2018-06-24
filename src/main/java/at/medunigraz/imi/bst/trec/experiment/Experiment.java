@@ -1,10 +1,7 @@
 package at.medunigraz.imi.bst.trec.experiment;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import at.medunigraz.imi.bst.trec.evaluator.SampleEval;
 import at.medunigraz.imi.bst.trec.model.*;
@@ -22,9 +19,6 @@ public class Experiment extends Thread {
 
 	private static final Logger LOG = LogManager.getLogger();
 
-	@Deprecated
-	private String id = null;
-	
 	private Query decorator;
 	
 	private Task task;
@@ -52,10 +46,11 @@ public class Experiment extends Thread {
 		TopicSet topicSet = new TopicSet(example);
 
 		File output = new File("results/" + getExperimentId() + ".trec_results");
-		TrecWriter tw = new TrecWriter(output);
+		final String runName = "experiment";  // TODO generate from experimentID, but respecting TREC syntax
+		TrecWriter tw = new TrecWriter(output, runName);
 
 		// TODO DRY Issue #53
-		Set<ResultList> resultListSet = new HashSet<>();
+		List<ResultList> resultListSet = new ArrayList<>();
 		for (Topic topic : topicSet.getTopics()) {
 			List<Result> results = decorator.query(topic);
 
@@ -97,21 +92,12 @@ public class Experiment extends Thread {
 		// TODO Experiment API #53
 		System.out.println(te.getNDCG() + ";" + name);
 	}
-	
-	@Deprecated
-	public void setExperimentId(String id) {
-		this.id = id;
-	}
 
 	public void setDecorator(Query decorator) {
 		this.decorator = decorator;
 	}
 
 	public String getExperimentId() {
-		if (id != null) {
-			return id;
-		}
-		
 		return this.goldStandard + "-" + getShortTaskName();
 		
 	}

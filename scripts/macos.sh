@@ -10,7 +10,8 @@ brew install swig
 # Install auto-sklearn (see https://automl.github.io/auto-sklearn/stable/installation.html)
 curl https://raw.githubusercontent.com/automl/auto-sklearn/master/requirements.txt | xargs -n 1 -L 1 pip3 install
 
-pip3 install auto-sklearn
+# The pickle file loads autosklearn.pipeline.implementations.Normalizer, which was removed in auto-sklearn 0.4.0
+pip3 install auto-sklearn==0.3.0
 
 # Install the classifier dependencies
 pip3 install -r requirements.txt

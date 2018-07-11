@@ -16,8 +16,8 @@ def stemming_tokenizer(text):
     return [stemmer.stem(w) for w in word_tokenize(text)]
 
 JSON_FILENAME = sys.argv[1]
-TFIDF_FILENAME = "tfidfmodel.sav"
-MODEL_NAME = "pm_model.sav"
+TFIDF_FILENAME = "../models/tfidfmodel.sav"
+MODEL_NAME = "../models/pm_model.sav"
 
 # read in json file with columns title, abstract, major_mesh, minor_mesh and pm
 with open(JSON_FILENAME) as f:

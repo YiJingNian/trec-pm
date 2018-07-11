@@ -5,11 +5,15 @@ import pickle
 import string
 from nltk.stem import PorterStemmer
 from nltk import word_tokenize
+from nltk import download
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import stopwords
 import sklearn
 from sklearn import preprocessing
+
+# download punkt package, used for tokenization by nltk
+download('punkt')
 
 def stemming_tokenizer(text):
     stemmer = PorterStemmer()

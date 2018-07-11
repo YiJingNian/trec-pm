@@ -1,3 +1,6 @@
 pandas
 nltk
 sklearn
+
+# See instalation instructions at https://automl.github.io/auto-sklearn/stable/installation.html
+#auto-sklearn

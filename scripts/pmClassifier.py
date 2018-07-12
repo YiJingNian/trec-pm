@@ -5,19 +5,23 @@ import pickle
 import string
 from nltk.stem import PorterStemmer
 from nltk import word_tokenize
+from nltk import download
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import stopwords
 import sklearn
 from sklearn import preprocessing
 
+# download punkt package, used for tokenization by nltk
+download('punkt')
+
 def stemming_tokenizer(text):
     stemmer = PorterStemmer()
     return [stemmer.stem(w) for w in word_tokenize(text)]
 
 JSON_FILENAME = sys.argv[1]
-TFIDF_FILENAME = "tfidfmodel.sav"
-MODEL_NAME = "pm_model.sav"
+TFIDF_FILENAME = "../models/tfidfmodel.sav"
+MODEL_NAME = "../models/pm_model.sav"
 
 # read in json file with columns title, abstract, major_mesh, minor_mesh and pm
 with open(JSON_FILENAME) as f:

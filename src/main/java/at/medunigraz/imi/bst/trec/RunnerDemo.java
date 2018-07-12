@@ -10,13 +10,15 @@ public class RunnerDemo {
 	public static void main(String[] args) {
 		final File pmTemplate = new File(RunnerDemo.class.getResource("/templates/biomedical_articles/negative-boost-keywords.json").getFile());
 
-		final File ctTemplate = new File(RunnerDemo.class.getResource("/templates/biomedical_articles/improved-ct.json").getFile());
+		final File ctTemplate = new File(RunnerDemo.class.getResource("/templates/clinical_trials/improved-ct.json").getFile());
+		final int year = 2017;
+
 
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
-		builder.newExperiment().withGoldStandard(Experiment.GoldStandard.OFFICIAL_2017).withTarget(Experiment.Task.PUBMED)
+		builder.newExperiment().withYear(year).withGoldStandard(Experiment.GoldStandard.OFFICIAL).withTarget(Experiment.Task.PUBMED)
 				.withTemplate(pmTemplate).withWordRemoval();
-		builder.newExperiment().withGoldStandard(Experiment.GoldStandard.OFFICIAL_2017)
+		builder.newExperiment().withYear(year).withGoldStandard(Experiment.GoldStandard.OFFICIAL)
 				.withTarget(Experiment.Task.CLINICAL_TRIALS).withTemplate(ctTemplate).withWordRemoval();
 
 		Set<Experiment> bestExperiments = builder.build();

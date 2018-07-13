@@ -27,26 +27,26 @@ def classify(jsonDict):
 		for i in range(len(j_dict))]
 	)
 
-	tfidf = pickle.load(open(TFIDF_FILENAME, 'rb'))
 	X_test = tfidf.transform(X_test)
 
 	# pm should be 1 for either human or animal pm or 0 for non pm
-	y_test = pd.Series([j_dict[str(i)]["pm"] for i in range(len(j_dict))])
+#	y_test = pd.Series([j_dict[str(i)]["pm"] for i in range(len(j_dict))])
 	#Encode from string to numbers
-	enc = preprocessing.LabelEncoder()
-	y_test = enc.fit_transform(y_test)
-	model = pickle.load(open(MODEL_NAME, 'rb'))
+	#enc = preprocessing.LabelEncoder()
+#	y_test = enc.fit_transform(y_test)
 	y_hat = model.predict(X_test)
 
-	print("Confusion Matrix: \n", sklearn.metrics.confusion_matrix(y_test, y_hat))
-	print("Precision: ", sklearn.metrics.precision_score(y_test, y_hat))
-	print("Recall: ", sklearn.metrics.recall_score(y_test, y_hat))
-	print("Accuracy: ", sklearn.metrics.accuracy_score(y_test, y_hat))
+#	print("Confusion Matrix: \n", sklearn.metrics.confusion_matrix(y_test, y_hat))
+#	print("Precision: ", sklearn.metrics.precision_score(y_test, y_hat))
+#	print("Recall: ", sklearn.metrics.recall_score(y_test, y_hat))
+#	print("Accuracy: ", sklearn.metrics.accuracy_score(y_test, y_hat))
 
 	return y_hat
 
 MODEL_NAME = sys.argv[1]#"../models/pm_model.sav"
 TFIDF_FILENAME = sys.argv[2]#"../models/tfidfmodel.sav"
+tfidf = pickle.load(open(TFIDF_FILENAME, 'rb'))
+model = pickle.load(open(MODEL_NAME, 'rb'))
 
 if len(sys.argv) >= 4:
 	JSON_FILENAME = sys.argv[3]
@@ -65,10 +65,7 @@ else:
 		j_dict = json.loads(line, strict=False)
 		outcome = classify(j_dict)
 		print("Result: " + str(outcome))
-		print("muh")
-		print("muh")
-		print("muh")
-		print("muh")
+		
 		
 
 

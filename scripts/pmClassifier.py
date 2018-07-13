@@ -16,36 +16,59 @@ from sklearn import preprocessing
 download('punkt')
 
 def stemming_tokenizer(text):
-    stemmer = PorterStemmer()
-    return [stemmer.stem(w) for w in word_tokenize(text)]
+	stemmer = PorterStemmer()
+	return [stemmer.stem(w) for w in word_tokenize(text)]
 
-JSON_FILENAME = sys.argv[1]
-TFIDF_FILENAME = "../models/tfidfmodel.sav"
-MODEL_NAME = "../models/pm_model.sav"
+def classify(jsonDict):
+	# adds title, abstracts and mesh terms into one document
+	X_test = pd.Series(
+		[j_dict[str(i)]["title"] + " " + j_dict[str(i)]["abstract"] +
+		" " + str(j_dict[str(i)]["major_mesh"] or "") + " " + str(j_dict[str(i)]["minor_mesh"] or "")
+		for i in range(len(j_dict))]
+	)
 
-# read in json file with columns title, abstract, major_mesh, minor_mesh and pm
-with open(JSON_FILENAME) as f:
-    j_dict = json.load(f)
+	tfidf = pickle.load(open(TFIDF_FILENAME, 'rb'))
+	X_test = tfidf.transform(X_test)
 
-# adds title, abstracts and mesh terms into one document
-X_test = pd.Series(
-    [j_dict[str(i)]["title"] + " " + j_dict[str(i)]["abstract"] +
-    " " + str(j_dict[str(i)]["major_mesh"] or "") + " " + str(j_dict[str(i)]["minor_mesh"] or "")
-    for i in range(len(j_dict))]
-)
+	# pm should be 1 for either human or animal pm or 0 for non pm
+	y_test = pd.Series([j_dict[str(i)]["pm"] for i in range(len(j_dict))])
+	#Encode from string to numbers
+	enc = preprocessing.LabelEncoder()
+	y_test = enc.fit_transform(y_test)
+	model = pickle.load(open(MODEL_NAME, 'rb'))
+	y_hat = model.predict(X_test)
 
-tfidf = pickle.load(open(TFIDF_FILENAME, 'rb'))
-X_test = tfidf.transform(X_test)
+	print("Confusion Matrix: \n", sklearn.metrics.confusion_matrix(y_test, y_hat))
+	print("Precision: ", sklearn.metrics.precision_score(y_test, y_hat))
+	print("Recall: ", sklearn.metrics.recall_score(y_test, y_hat))
+	print("Accuracy: ", sklearn.metrics.accuracy_score(y_test, y_hat))
 
-# pm should be 1 for either human or animal pm or 0 for non pm
-y_test = pd.Series([j_dict[str(i)]["pm"] for i in range(len(j_dict))])
-#Encode from string to numbers
-enc = preprocessing.LabelEncoder()
-y_test = enc.fit_transform(y_test)
-model = pickle.load(open(MODEL_NAME, 'rb'))
-y_hat = model.predict(X_test)
+	return y_hat
 
-print("Confusion Matrix: \n", sklearn.metrics.confusion_matrix(y_test, y_hat))
-print("Precision: ", sklearn.metrics.precision_score(y_test, y_hat))
-print("Recall: ", sklearn.metrics.recall_score(y_test, y_hat))
-print("Accuracy: ", sklearn.metrics.accuracy_score(y_test, y_hat))
+MODEL_NAME = sys.argv[1]#"../models/pm_model.sav"
+TFIDF_FILENAME = sys.argv[2]#"../models/tfidfmodel.sav"
+
+if len(sys.argv) >= 4:
+	JSON_FILENAME = sys.argv[3]
+	
+	# read in json file with columns title, abstract, major_mesh, minor_mesh and pm
+	with open(JSON_FILENAME) as f:
+			j_dict = json.load(f)
+	classify(j_dict)
+else:
+	# In this mode, we expect one JSON document per line, classify it, return the classification value
+	# and wait for the next document
+	print("Waiting for input on STDIN, one JSON document batch per line")
+	for line in sys.stdin:
+		if line.strip() == "quit":
+			sys.exit(0)
+		j_dict = json.loads(line, strict=False)
+		outcome = classify(j_dict)
+		print("Result: " + str(outcome))
+		print("muh")
+		print("muh")
+		print("muh")
+		print("muh")
+		
+
+

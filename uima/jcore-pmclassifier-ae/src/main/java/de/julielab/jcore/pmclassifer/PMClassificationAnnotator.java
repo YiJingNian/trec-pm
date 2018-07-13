@@ -92,7 +92,7 @@ public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
                 AutoDescriptor ad;
                 try {
                     ad = JCasUtil.selectSingle(aJCas, AutoDescriptor.class);
-                } catch (NoSuchElementException e) {
+                } catch (IllegalArgumentException e) {
                     ad = new AutoDescriptor(aJCas);
                     ad.addToIndexes();
                 }

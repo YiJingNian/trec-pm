@@ -1,6 +1,6 @@
-package de.julielab.jcore.pmclassifer;
+package de.julielab.jcore.ae.pmclassifer;
 
-import static de.julielab.jcore.pmclassifer.PMClassificationAnnotator.*;
+import static de.julielab.jcore.ae.pmclassifer.PMClassificationAnnotator.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -13,10 +13,7 @@ import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.resource.ResourceInitializationException;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

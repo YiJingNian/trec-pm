@@ -1,4 +1,4 @@
-package de.julielab.jcore.pmclassifer;
+package de.julielab.jcore.ae.pmclassifer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

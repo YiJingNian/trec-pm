@@ -114,6 +114,9 @@ public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
         Collection<AbstractText> abstractTexts = JCasUtil.select(aJCas, AbstractText.class);
         Collection<MeshHeading> meshHeadings = JCasUtil.select(aJCas, MeshHeading.class);
 
+        if (meshHeadings.isEmpty())
+            log.warn("Did not find any MeSH Headings in document {}", JCoReTools.getDocId(aJCas));
+
         String title = titles.stream().map(Annotation::getCoveredText).collect(Collectors.joining(" "));
         String abstractText = abstractTexts.stream().map(Annotation::getCoveredText).collect(Collectors.joining(" "));
         String meshMajor = meshHeadings.stream().filter(h -> h.getDescriptorNameMajorTopic()).map(h -> h.getDescriptorName()).collect(Collectors.joining(" "));

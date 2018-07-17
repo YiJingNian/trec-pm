@@ -1,8 +1,22 @@
 package de.julielab.jcore.trec2018.pubmed;
 
-public class Trec2018FieldGenerator {
+import de.julielab.jcore.consumer.es.ArrayFieldValue;
+import de.julielab.jcore.consumer.es.FieldGenerationException;
+import de.julielab.jcore.consumer.es.FieldGenerator;
+import de.julielab.jcore.consumer.es.FilterRegistry;
+import de.julielab.jcore.consumer.es.preanalyzed.Document;
+import de.julielab.jcore.consumer.es.preanalyzed.RawToken;
+import de.julielab.jcore.types.*;
+import de.julielab.jcore.utility.JCoReTools;
+import org.apache.commons.csv.CSVParser;
+import org.apache.uima.cas.CASException;
+import org.apache.uima.fit.util.JCasUtil;
+import org.apache.uima.jcas.JCas;
 
+import java.util.Collection;
+import java.util.Optional;
 
+public class Trec2018FieldGenerator extends FieldGenerator {
 
 
         public Trec2018FieldGenerator(FilterRegistry filterRegistry) {
@@ -19,10 +33,17 @@ public class Trec2018FieldGenerator {
             addPublicationDate(jCas, document);
             addMeshTags(jCas, document);
             addDocumentSource(jCas, document);
+            addGsInfo(jCas, document);
             return document;
         }
 
-        /**
+    private void addGsInfo(JCas jCas, Document document) {
+        Trec2018FilterBoard filterBoard = filterRegistry.getFilterBoard(Trec2018FilterBoard.class);
+        CSVParser goldStandard = filterBoard.goldStandard;
+        goldStandard.
+    }
+
+    /**
          * We do this to reproduce the behavior of the parsing algorithm of Michel's TREC-PM-17 coworker where only the last abstract section was used in structured abstracts.
          * @param jCas
          * @param document

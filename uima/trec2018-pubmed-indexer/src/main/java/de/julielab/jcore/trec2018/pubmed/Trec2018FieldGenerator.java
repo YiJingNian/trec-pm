@@ -37,9 +37,33 @@ public class Trec2018FieldGenerator extends FieldGenerator {
             addPublicationDate(jCas, document);
             addMeshTags(jCas, document);
             addDocumentSource(jCas, document);
+            addGenes(jCas, document);
+            addDocumentClasses(jCas, document);
             addGsInfo(jCas, document);
             return document;
         }
+
+    private void addDocumentClasses(JCas jCas, Document document) {
+        Optional<AutoDescriptor> any = JCasUtil.select(jCas, AutoDescriptor.class).stream().findAny();
+        if (any.isPresent() && any.get().getDocumentClasses() != null) {
+            ArrayFieldValue arrayFieldValue = new ArrayFieldValue();
+            AutoDescriptor ad = any.get();
+            for (int i = 0; i < ad.getDocumentClasses().size(); i++) {
+                DocumentClass documentClass = ad.getDocumentClasses(i);
+                arrayFieldValue.add(new RawToken(documentClass.getClassname()));
+            }
+            document.addField("documentClasses", arrayFieldValue);
+        }
+    }
+
+    private void addGenes(JCas jCas, Document document) {
+        Collection<Gene> genes = JCasUtil.select(jCas, Gene.class);
+        ArrayFieldValue genesFieldValue = new ArrayFieldValue();
+        for (Gene gene : genes) {
+            genesFieldValue.add(new RawToken(gene.getCoveredText()));
+        }
+        document.addField("genes", genesFieldValue);
+    }
 
     private void addGsInfo(JCas jCas, Document document) {
         Trec2018FilterBoard filterBoard = filterRegistry.getFilterBoard(Trec2018FilterBoard.class);

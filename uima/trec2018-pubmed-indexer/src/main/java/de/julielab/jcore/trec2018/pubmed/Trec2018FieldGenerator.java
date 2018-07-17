@@ -7,17 +7,21 @@ import de.julielab.jcore.consumer.es.FilterRegistry;
 import de.julielab.jcore.consumer.es.preanalyzed.Document;
 import de.julielab.jcore.consumer.es.preanalyzed.RawToken;
 import de.julielab.jcore.types.*;
+import de.julielab.jcore.types.Date;
 import de.julielab.jcore.utility.JCoReTools;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 public class Trec2018FieldGenerator extends FieldGenerator {
 
+
+    private static final Set<String> unwantedGsFields = new HashSet<>(Arrays.asList("unified_id", "title", "abstract"));
 
         public Trec2018FieldGenerator(FilterRegistry filterRegistry) {
             super(filterRegistry);
@@ -39,8 +43,19 @@ public class Trec2018FieldGenerator extends FieldGenerator {
 
     private void addGsInfo(JCas jCas, Document document) {
         Trec2018FilterBoard filterBoard = filterRegistry.getFilterBoard(Trec2018FilterBoard.class);
-        CSVParser goldStandard = filterBoard.goldStandard;
-        goldStandard.
+        Map<String, CSVRecord> gsRecords = filterBoard.gsRecords;
+        String docId = JCoReTools.getDocId(jCas);
+        CSVRecord record = gsRecords.get(docId);
+        if (record != null) {
+            Map<String, Integer> gsHeaderMap = filterBoard.gsHeaderMap;
+            for (String header : gsHeaderMap.keySet()) {
+                if (unwantedGsFields.contains(header))
+                    continue;
+                String value = record.get(header);
+                if (!StringUtils.isBlank(value))
+                    document.addField(header, value);
+            }
+        }
     }
 
     /**

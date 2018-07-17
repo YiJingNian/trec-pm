@@ -23,11 +23,12 @@
 		</parameters>
 		<corpus>
 			<subset>
-				<table>tm1_subset</table>
+				<table>tm_random500k</table>
 				<reset>true</reset>
+				<annotationpgschema>_data_xmi</annotationpgschema>
 			</subset>
 			<costosys>
-				<configurationFile>costosys.xml</configurationFile>
+				<configurationFile>../costosys.xml</configurationFile>
 			</costosys>
 		</corpus>
 	</train>

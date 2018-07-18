@@ -66,7 +66,7 @@ else:
 			sys.exit(0)
 		jsontime = time.time()
 		j_dict = json.loads(line, strict=False)
-		jsontime = time.time - jsontime
+		jsontime = time.time() - jsontime
 		classifytime = time.time()
 		outcome = classify(j_dict)
 		classifytime = time.time() - classifytime

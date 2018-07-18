@@ -48,6 +48,8 @@ MODEL_NAME = sys.argv[1]#"../models/pm_model.sav"
 TFIDF_FILENAME = sys.argv[2]#"../models/tfidfmodel.sav"
 tfidf = pickle.load(open(TFIDF_FILENAME, 'rb'))
 model = pickle.load(open(MODEL_NAME, 'rb'))
+print(type(tfidf))
+print(type(model))
 
 if len(sys.argv) >= 4:
 	JSON_FILENAME = sys.argv[3]

@@ -11,6 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.corpus import stopwords
 import sklearn
 from sklearn import preprocessing
+import time
 
 # download punkt package, used for tokenization by nltk
 download('punkt')
@@ -59,12 +60,21 @@ else:
 	# In this mode, we expect one JSON document per line, classify it, return the classification value
 	# and wait for the next document
 	print("Waiting for input on STDIN, one JSON document batch per line")
+	alltime = time.time()
 	for line in sys.stdin:
 		if line.strip() == "quit":
 			sys.exit(0)
+		jsontime = time.time()
 		j_dict = json.loads(line, strict=False)
+		jsontime = time.time - jsontime
+		classifytime = time.time()
 		outcome = classify(j_dict)
+		classifytime = time.time() - classifytime
 		print("Result: " + str(outcome))
+		alltime = time.time() - alltime
+		print("Timing: JSON conversion time: ", jsontime)
+		print("Timing: classification time: ", classifytime)
+		print("Timing: allover time: ", alltime)
 		
 		
 

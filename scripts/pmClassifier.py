@@ -60,8 +60,8 @@ else:
 	# In this mode, we expect one JSON document per line, classify it, return the classification value
 	# and wait for the next document
 	print("Waiting for input on STDIN, one JSON document batch per line")
-	alltime = time.time()
 	for line in sys.stdin:
+		alltime = time.time()
 		if line.strip() == "quit":
 			sys.exit(0)
 		jsontime = time.time()

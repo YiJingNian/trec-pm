@@ -72,9 +72,9 @@ else:
 		classifytime = time.time() - classifytime
 		print("Result: " + str(outcome))
 		alltime = time.time() - alltime
-		print("Timing: JSON conversion time: ", jsontime)
-		print("Timing: classification time: ", classifytime)
-		print("Timing: allover time: ", alltime)
+		print("Timing: JSON conversion time: ", jsontime, file=sys.stderr)
+		print("Timing: classification time: ", classifytime, file=sys.stderr)
+		print("Timing: allover time: ", alltime, file=sys.stderr)
 		
 		
 

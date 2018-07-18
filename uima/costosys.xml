@@ -30,7 +30,7 @@
 	<DBConnectionInformation>
 	<activeDBConnection>trecpm2018</activeDBConnection>
 	<DBConnections>
-		<DBConnection name="trecpm2018" url="jdbc:postgresql://h4:5432/trecpm2018" />
+		<DBConnection name="trecpm2018" url="jdbc:postgresql://localhost:5432/trecpm2018" />
         </DBConnections>
         </DBConnectionInformation>
 </databaseConnectorConfiguration>

@@ -24,7 +24,7 @@ public class Trec2018FilterBoard extends FilterBoard {
     @Override
     public void setupFilters() {
         gsRecords = new HashMap<>();
-        try (CSVParser csvRecords = CSVFormat.TDF.parse(new StringReader(gsData.stream().collect(Collectors.joining(System.getProperty("line.separator")))))) {
+        try (CSVParser csvRecords = CSVFormat.TDF.withFirstRecordAsHeader().parse(new StringReader(gsData.stream().collect(Collectors.joining(System.getProperty("line.separator")))))) {
             gsHeaderMap = csvRecords.getHeaderMap();
             Iterator<CSVRecord> it = csvRecords.iterator();
             while (it.hasNext()) {

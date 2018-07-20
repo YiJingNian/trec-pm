@@ -99,8 +99,8 @@
                 <name>urls</name>
                 <value>
                     <array>
-                        <string>http://h5:9300</string>
-                        <string>http://h6:9300</string>
+                        <string>http://h5:9200</string>
+                        <string>http://h6:9200</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -129,7 +129,7 @@
                 <name>GoldStandard</name>
                 <description>GoldStandard Analysis from Ariane</description>
                 <configurableDataResourceSpecifier>
-                    <url>file://../20180622processedGoldStandardTopics.tsv.gz</url>
+                    <url>file:../20180622processedGoldStandardTopics.tsv.gz</url>
                     <resourceMetaData>
                         <name/>
                         <configurationParameters/>

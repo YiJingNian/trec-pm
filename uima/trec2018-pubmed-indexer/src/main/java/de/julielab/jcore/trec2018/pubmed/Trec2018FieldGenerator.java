@@ -73,7 +73,7 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         if (record != null) {
             Map<String, Integer> gsHeaderMap = filterBoard.gsHeaderMap;
             for (String header : gsHeaderMap.keySet()) {
-                if (unwantedGsFields.contains(header))
+                if (unwantedGsFields.contains(header) || StringUtils.isBlank(header))
                     continue;
                 String value = record.get(header);
                 if (!StringUtils.isBlank(value))

@@ -1,0 +1,16 @@
+codon
+exon
+factor
+family
+gefitinib
+gist
+imatinib
+inhibitor
+kinase
+methyl
+prognostic
+resistance
+resistant
+stromal
+target
+trastuzumab

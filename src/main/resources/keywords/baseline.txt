@@ -1,3 +1,4 @@
+prognosis prognostic therapy treatment case report patient results
 prognosis
 prognostic
 therapy
@@ -6,3 +7,4 @@ case
 report
 patient
 results
+

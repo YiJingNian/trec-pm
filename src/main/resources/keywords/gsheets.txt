@@ -1,78 +1,83 @@
-aggressive
-amplification
-antitumor
-cancer
-cancers
-capecitabine
-carcinoma
-carcinomas
-case
-cell
-chemoradiotherapy
-chemotherapeutic
+therapy
+therapeutical
+prognostic
+prognosis
+recurrence-free survival
+recurrence-free
 chemotherapy
-cisplatin
-clinical
-DFS
+chemotherapeutic
+prognosis
+disease-free survival
 disease-free
-drugs
-efficacy
-efficiency
-existing
-first-in-class
+precision medicine
+response
+treatment
+prevention
+target therapy
+target
+targeted therapy
+targeted
+proliferation
+inhibition
+inhibitor
+outcome
+TNM
+PFS
+DFS
+cell line
+represses
+case report
+OS
+overall survival
+personalized medicine strategy
+resistance
+risk
+metastasis
+stage
 Gleason
 grade
 grading
-in vivo
-inhibition
-inhibitor
-line
+recurrence
+antitumor
 malignancy
 meta-analysis
-metastasis
+progression
 model
-neoplasm
-neoplasms
-oral
-OS
-outcome
-overall
-overexpression
-overview
-personalized
-PFS
+in vivo
+existing drugs
+drugs
+aggressive
+risk stratification
+chemoradiotherapy
+radiotherapy
+cisplatin
+efficacy
+efficiency
+sensitive
+trial
 phase I
 phase II
+clinical trial
+clinical
 placebo-controlled
+oral inhibitor
 potent
-precision
-prevention
-prognosis
-prognostic
-progression
-proliferation
-radiotherapy
-recurrence
-recurrence-free
-relapse-free
-report
-represses
-resistance
-response
+first-in-class
 RFS
-risk
-sensitive
+relapse-free survival
+relapse-free
 smoking
-stage
-stratification
-surgery
-target
-targeted
-therapeutical
-therapy
-TNM
 trastuzumab
-treatment
-trial
+capecitabine
+overview
+overexpression
+amplification
 tumor
 tumour
+cancer
+cancers
+carcinoma
+carcinomas
+neoplasm
+neoplasms
+surgery

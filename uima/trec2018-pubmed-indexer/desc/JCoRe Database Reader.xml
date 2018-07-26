@@ -96,7 +96,7 @@
             <nameValuePair>
                 <name>ResetTable</name>
                 <value>
-                    <boolean>false</boolean>
+                    <boolean>true</boolean>
                 </value>
             </nameValuePair>
             <nameValuePair>
@@ -134,7 +134,7 @@
             <nameValuePair>
                 <name>Table</name>
                 <value>
-                    <string>medline_xmi_subset</string>
+                    <string>goldstandard</string>
                 </value>
             </nameValuePair>
             <nameValuePair>

@@ -1,0 +1,21 @@
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "StoreEntireXmiData" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "StoreRecursively" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "StoreBaseDocument" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "CostosysConfigFile" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "UpdateMode" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "PerformGZIP" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "DocumentTable" is not set.
+

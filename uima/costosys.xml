@@ -2,8 +2,8 @@
 <databaseConnectorConfiguration>
 	<DBSchemaInformation>
 	<activePostgresSchema>erik</activePostgresSchema>
-	<activeTableSchema>medline_2017</activeTableSchema>
-	<dataTable>_data_medline</dataTable>
+	<activeTableSchema>xmi_text</activeTableSchema>
+	<activeDataPostgresSchema>_data_xmi</activeDataPostgresSchema>
 	<tableSchemas>
 		<tableSchema name="medline_trecpm2018"
 				forEach="/PubmedArticleSet/PubmedArticle/MedlineCitation">

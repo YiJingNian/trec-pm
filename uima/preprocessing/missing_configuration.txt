@@ -1,2 +1,6 @@
-Could not reader "<AAE delegate>"due to a parsing error: Could not parse an AAE delegate specifier: Import failed.  Could not read from URL jar:file:/home/faessler/Coding/git/trec2018/uima/preprocessing/./lib/jcore-types-2.3.0-SNAPSHOT.jar!/de/julielab/jcore/types/jcore-morpho-syntax-types.xml. (Descriptor: <unknown>)
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "CostosysConfigFile" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "DocumentTable" is not set.
 

@@ -3,7 +3,7 @@
     <collectionReader>
         <collectionIterator>
             <descriptor>
-                <include href="JCoRe XMI Database Reader.xml"/>
+                <include href="JCoRe TREC PM Extra Abstracts Reader.xml"/>
             </descriptor>
         </collectionIterator>
     </collectionReader>

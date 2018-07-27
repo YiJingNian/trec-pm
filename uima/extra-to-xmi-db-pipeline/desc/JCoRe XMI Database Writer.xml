@@ -114,17 +114,32 @@
                 </value>
             </nameValuePair>
             <nameValuePair>
-                <name>AnnotationsToStore</name>
+                <name>AnnotationStoragePostgresSchema</name>
+                <value>
+                    <string>_data_xmi</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>BaseDocumentAnnotationTypes</name>
                 <value>
                     <array>
-                        <string>de.julielab.jcore.types.Sentence</string>
-                        <string>de.julielab.jcore.types.Token</string>
-                        <string>de.julielab.jcore.types.Abbreviation</string>
-                        <string>de.julielab.jcore.types.Organism</string>
-                        <string>de.julielab.jcore.types.Gene</string>
-                        <string>de.julielab.jcore.types.EventMention</string>
-                        <string>de.julielab.jcore.types.LikelihoodIndicator</string>
+                        <string>de.julielab.jcore.types.AbstractText</string>
+                        <string>de.julielab.jcore.types.Title</string>
+                        <string>de.julielab.jcore.types.pubmed.Header</string>
+                        <string>de.julielab.jcore.types.pubmed.ManualDescriptor</string>
                     </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>CostosysConfigFile</name>
+                <value>
+                    <string>../costosys.xml</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>DocumentTable</name>
+                <value>
+                    <string>_data_xmi.documents</string>
                 </value>
             </nameValuePair>
             <nameValuePair>
@@ -136,13 +151,7 @@
             <nameValuePair>
                 <name>StoreBaseDocument</name>
                 <value>
-                    <boolean>false</boolean>
-                </value>
-            </nameValuePair>
-            <nameValuePair>
-                <name>StoreEntireXmiData</name>
-                <value>
-                    <boolean>false</boolean>
+                    <boolean>true</boolean>
                 </value>
             </nameValuePair>
             <nameValuePair>
@@ -157,12 +166,17 @@
                     <boolean>true</boolean>
                 </value>
             </nameValuePair>
+            <nameValuePair>
+                <name>StoreEntireXmiData</name>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </nameValuePair>
         </configurationParameterSettings>
         <typeSystemDescription>
             <imports>
                 <import name="de.julielab.jcore.types.jcore-xmi-splitter-types"/>
                 <import name="de.julielab.jcore.types.extensions.jcore-document-meta-extension-types"/>
-                <import name="org.apache.uima.ducc.FlowControllerTS"/>
             </imports>
         </typeSystemDescription>
         <fsIndexCollection/>

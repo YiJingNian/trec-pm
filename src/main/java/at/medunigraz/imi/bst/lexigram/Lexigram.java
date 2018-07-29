@@ -5,7 +5,10 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -16,6 +19,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Lexigram {
+
+    private static final Logger LOG = LogManager.getLogger();
 
     private static final String ENDPOINT = "https://api.lexigram.io/v1/lexigraph/";
 
@@ -202,8 +207,19 @@ public class Lexigram {
                 throw new RuntimeException("Unauthorized access to Lexigram API. Place your key in the file trec-pm.properties.");
             }
 
+            if (response.getStatus() != 200) {
+                throw new RuntimeException("Got status code " + response.getStatus() + " from Lexigram API with body " + response.getBody());
+            }
+
             JSONObject body = new JSONObject(response.getBody());
-            String firstArrayObject = body.getJSONArray("array").getJSONObject(0).toString();
+
+            String firstArrayObject = "";
+            try {
+                firstArrayObject = body.getJSONObject("object").toString();
+            } catch (JSONException e) {
+                LOG.error("Unexpected response from Lexigram API: " + body);
+                throw e;
+            }
 
             Cache.CALLS.put(url, firstArrayObject);
             Cache.save();

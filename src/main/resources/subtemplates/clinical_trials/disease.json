@@ -1,0 +1,19 @@
+{
+  "dis_max": {
+    "queries": [
+      {
+        "multi_match": {
+          "query": "{{disease}}",
+          "fields": [
+            "brief_title^2",
+            "summary",
+            "inclusion"
+          ],
+          "tie_breaker": 0.3,
+          "type": "best_fields",
+          "boost": 1
+        }
+      }
+    ]
+  }
+}

@@ -18,8 +18,8 @@ public class ClinicalTrialsExperimenter {
 
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
-		// mugctboost
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(improvedTemplate)
+		// hpictboost
+		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withSubTemplate(improvedTemplate)
 				.withWordRemoval();
 
 		Set<Experiment> experiments = builder.build();

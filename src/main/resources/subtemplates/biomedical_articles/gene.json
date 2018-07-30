@@ -15,7 +15,7 @@
           "boost": 1
         }
       },
-      {{geneSynonyms:gene_synonym.json}}
+      {{geneSynonyms:biomedical_articles/gene_synonym.json}}
     ]
   }
 }

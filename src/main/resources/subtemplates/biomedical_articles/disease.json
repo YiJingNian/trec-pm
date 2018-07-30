@@ -15,7 +15,7 @@
           "boost": 1
         }
       },
-      {{diseaseSynonyms:disease_synonym.json}}
+      {{diseaseSynonyms:biomedical_articles/disease_synonym.json}}
     ]
   }
 }

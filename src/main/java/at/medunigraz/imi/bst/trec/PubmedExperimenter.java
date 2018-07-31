@@ -18,13 +18,9 @@ public class PubmedExperimenter {
 		
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
-		// mugpubboost
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval();
-
 		// hpipubboost
 		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym();
+				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym().withDiseasePreferredTerm();
 
 		Set<Experiment> experiments = builder.build();
 

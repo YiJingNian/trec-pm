@@ -26,7 +26,6 @@ public class PmClassifierInputFieldGenerator extends FieldGenerator {
         addPmid(jCas, document);
         addTitle(jCas, document);
         addFullAbstract(jCas, document);
-        addAbstractSections(jCas, document);
         addMeshTags(jCas, document);
         addGenes(jCas, document);
         addOrganisms(jCas, document);
@@ -66,16 +65,6 @@ public class PmClassifierInputFieldGenerator extends FieldGenerator {
         document.addField("pubmedId", pmid);
     }
 
-    private void addAbstractSections(JCas jCas, Document document) {
-        Collection<AbstractSection> sections = JCasUtil.select(jCas, AbstractSection.class);
-        if (!sections.isEmpty()) {
-            for (AbstractSection section : sections) {
-                AbstractSectionHeading heading = (AbstractSectionHeading) section.getAbstractSectionHeading();
-                String nlmCategory = heading.getNlmCategory();
-                document.addField("abstract_" + nlmCategory, section.getCoveredText());
-            }
-        }
-    }
 
     private void addGenes(JCas jCas, Document document) {
         Collection<Gene> genes = JCasUtil.select(jCas, Gene.class);

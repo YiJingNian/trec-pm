@@ -91,7 +91,6 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         Map<String, List<CSVRecord>> gsRecords = filterBoard.gsRecords;
         String docId = JCoReTools.getDocId(jCas);
         List<CSVRecord> records = gsRecords.get(docId);
-        System.out.println(records.size());
         if (records != null) {
             for (CSVRecord record : records) {
                 Map<String, Integer> gsHeaderMap = filterBoard.gsHeaderMap;
@@ -101,11 +100,14 @@ public class Trec2018FieldGenerator extends FieldGenerator {
                     String value = record.get(header);
                     if (!StringUtils.isBlank(value)) {
                         ArrayFieldValue fValue = (ArrayFieldValue) document.get(header);
+                        // We must add the value in both if-else-paths because the document won't keep empty arrays
                         if (fValue == null) {
                             fValue = new ArrayFieldValue();
+                            fValue.add(new RawToken(value));
                             document.addField(header, fValue);
+                        } else {
+                            fValue.add(new RawToken(value));
                         }
-                        fValue.add(new RawToken(value));
                     }
                 }
             }

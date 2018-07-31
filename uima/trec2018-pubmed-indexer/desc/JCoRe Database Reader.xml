@@ -122,6 +122,7 @@
                 <value>
                     <array>
                         <string>de.julielab.jcore.types.Gene</string>
+                        <string>de.julielab.jcore.types.Organism</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -134,7 +135,7 @@
             <nameValuePair>
                 <name>Table</name>
                 <value>
-                    <string>goldstandard</string>
+                    <string>erik.gs2017</string>
                 </value>
             </nameValuePair>
             <nameValuePair>

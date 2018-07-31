@@ -157,6 +157,18 @@
                     <boolean>true</boolean>
                 </value>
             </nameValuePair>
+            <nameValuePair>
+                <name>CostosysConfigFile</name>
+                <value>
+                    <string>../costosys.xml</string>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>DocumentTable</name>
+                <value>
+                    <string>_data_xmi.documents</string>
+                </value>
+            </nameValuePair>
         </configurationParameterSettings>
         <typeSystemDescription>
             <imports>

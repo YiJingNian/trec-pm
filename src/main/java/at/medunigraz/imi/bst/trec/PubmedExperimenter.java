@@ -20,7 +20,7 @@ public class PubmedExperimenter {
 
 		// hpipubboost
 		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym();
+				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym().withDiseasePreferredTerm();
 
 		Set<Experiment> experiments = builder.build();
 

@@ -15,6 +15,8 @@ public class ClinicalTrial {
     public String official_title;
     public String summary;
     public String description;
+    public String studyType;    // TODO Refactor into enum
+    public String interventionModel;    // TODO Refactor into enum
     public String primaryPurpose;  // TODO Refactor into enum
     public ArrayList<String> outcomeMeasures;
     public ArrayList<String> outcomeDescriptions;

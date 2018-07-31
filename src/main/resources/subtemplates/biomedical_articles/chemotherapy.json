@@ -1,0 +1,6 @@
+{
+  "query_string": {
+    "query": "*mab *nib *cin *one *ate *mus *lin",
+    "fields": {{biomedical_articles/fields.json}}
+  }
+}

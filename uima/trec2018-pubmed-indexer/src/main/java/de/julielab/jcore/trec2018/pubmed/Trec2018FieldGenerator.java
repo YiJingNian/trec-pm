@@ -91,6 +91,7 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         Map<String, List<CSVRecord>> gsRecords = filterBoard.gsRecords;
         String docId = JCoReTools.getDocId(jCas);
         List<CSVRecord> records = gsRecords.get(docId);
+        System.out.println(records.size());
         if (records != null) {
             for (CSVRecord record : records) {
                 Map<String, Integer> gsHeaderMap = filterBoard.gsHeaderMap;

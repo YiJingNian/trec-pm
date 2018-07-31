@@ -71,6 +71,14 @@
                     <boolean>true</boolean>
                 </value>
             </nameValuePair>
+            <nameValuePair>
+                <name>FieldGenerators</name>
+                <value>
+                    <array>
+                        <string>de.julielab.pmclassifier.jsonoutput.PmClassifierInputFieldGenerator</string>
+                    </array>
+                </value>
+            </nameValuePair>
         </configurationParameterSettings>
         <typeSystemDescription/>
         <typePriorities/>

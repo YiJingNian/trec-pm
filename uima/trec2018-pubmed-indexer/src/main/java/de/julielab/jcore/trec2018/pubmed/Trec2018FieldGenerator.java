@@ -13,8 +13,10 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.CASException;
+import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 
 import java.util.*;
 
@@ -38,10 +40,27 @@ public class Trec2018FieldGenerator extends FieldGenerator {
             addMeshTags(jCas, document);
             addDocumentSource(jCas, document);
             addGenes(jCas, document);
+            addOrganisms(jCas, document);
             addDocumentClasses(jCas, document);
             addGsInfo(jCas, document);
             return document;
         }
+
+    private void addOrganisms(JCas jCas, Document document) {
+        Collection<Organism> organisms = JCasUtil.select(jCas, Organism.class);
+        ArrayFieldValue fieldValue = new ArrayFieldValue();
+        for (Organism o : organisms) {
+            FSArray resourceEntryList = o.getResourceEntryList();
+            if (resourceEntryList != null) {
+                for (int i = 0; i < resourceEntryList.size(); ++i) {
+                    ResourceEntry entry = (ResourceEntry) resourceEntryList.get(i);
+                    if (entry != null)
+                        fieldValue.add(new RawToken(entry.getEntryId()));
+                }
+            }
+        }
+        document.addField("organisms", fieldValue);
+    }
 
     private void addDocumentClasses(JCas jCas, Document document) {
         Optional<AutoDescriptor> any = JCasUtil.select(jCas, AutoDescriptor.class).stream().findAny();

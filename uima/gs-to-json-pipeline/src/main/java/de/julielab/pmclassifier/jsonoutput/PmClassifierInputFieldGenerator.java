@@ -3,6 +3,7 @@ package de.julielab.pmclassifier.jsonoutput;
 import de.julielab.jcore.consumer.es.ArrayFieldValue;
 import de.julielab.jcore.consumer.es.FieldGenerationException;
 import de.julielab.jcore.consumer.es.FieldGenerator;
+import de.julielab.jcore.consumer.es.FilterRegistry;
 import de.julielab.jcore.consumer.es.preanalyzed.Document;
 import de.julielab.jcore.consumer.es.preanalyzed.RawToken;
 import de.julielab.jcore.types.*;
@@ -15,6 +16,11 @@ import org.apache.uima.jcas.cas.FSArray;
 import java.util.Collection;
 
 public class PmClassifierInputFieldGenerator extends FieldGenerator {
+
+    public PmClassifierInputFieldGenerator(FilterRegistry filterRegistry) {
+        super(filterRegistry);
+    }
+
     @Override
     public Document addFields(JCas jCas, Document document) throws CASException, FieldGenerationException {
         addPmid(jCas, document);

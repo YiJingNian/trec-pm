@@ -9,7 +9,8 @@
           "type": "best_fields",
           "boost": 1
         }
-      }
+      },
+      {{diseaseHypernyms:clinical_trials/disease_hypernym.json}}
     ]
   }
 }

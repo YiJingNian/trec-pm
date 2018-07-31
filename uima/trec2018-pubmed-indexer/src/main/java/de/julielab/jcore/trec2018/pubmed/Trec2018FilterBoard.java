@@ -30,6 +30,12 @@ public class Trec2018FilterBoard extends FilterBoard {
             while (it.hasNext()) {
                 CSVRecord record = it.next();
                 String trecDocId = record.get("trec_doc_id");
+                if (gsRecords.containsKey(trecDocId)) {
+                    System.out.println("ID: " + trecDocId);
+                    System.out.println("New: " + record);
+                    System.out.println("Old: " + gsRecords.get(trecDocId));
+                    System.out.println("---");
+                }
                 gsRecords.put(trecDocId, record);
             }
         } catch (IOException e) {

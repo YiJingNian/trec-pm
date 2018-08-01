@@ -20,7 +20,7 @@ public class ClinicalTrialsExperimenter {
 
 		// hpictboost
 		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withSubTemplate(improvedTemplate)
-				.withWordRemoval().withSolidTumor().withDiseasePreferredTerm();
+				.withWordRemoval().withSolidTumor().withDiseasePreferredTerm().withDiseaseSynonym();
 
 		Set<Experiment> experiments = builder.build();
 

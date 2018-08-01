@@ -19,6 +19,7 @@
           "boost": 0.1
         }
       },
+      {{diseaseSynonyms:clinical_trials/disease_synonym.json}},
       {{diseaseHypernyms:clinical_trials/disease_hypernym.json}}
     ]
   }

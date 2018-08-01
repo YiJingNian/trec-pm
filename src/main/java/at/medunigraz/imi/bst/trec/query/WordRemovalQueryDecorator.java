@@ -13,6 +13,8 @@ public class WordRemovalQueryDecorator extends QueryDecorator {
 	private static final Set<String> DOMAIN_STOPWORDS = new HashSet<>();
 	static {
 		DOMAIN_STOPWORDS.add("cancer");
+		DOMAIN_STOPWORDS.add("ca");
+		DOMAIN_STOPWORDS.add("-");
 		DOMAIN_STOPWORDS.add("carcinoma");
 		DOMAIN_STOPWORDS.add("tumor");
 		DOMAIN_STOPWORDS.add("tumour");
@@ -22,7 +24,10 @@ public class WordRemovalQueryDecorator extends QueryDecorator {
         DOMAIN_STOPWORDS.add("the");
         DOMAIN_STOPWORDS.add("malignant");
         DOMAIN_STOPWORDS.add("neoplasm");
-		DOMAIN_STOPWORDS.add("adenocarcinoma");
+		DOMAIN_STOPWORDS.add("cell");
+		DOMAIN_STOPWORDS.add("nerve");
+		DOMAIN_STOPWORDS.add("adenocarcinoma");	// TODO check impact
+		DOMAIN_STOPWORDS.add("sarcoma");		// TODO check impact
 	};
 
 	private static final String TOKEN_SEPARATOR = " ";

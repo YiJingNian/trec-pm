@@ -1,38 +1,72 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
-import at.medunigraz.imi.bst.trec.model.Topic;
-import at.medunigraz.imi.bst.trec.model.TopicSet;
+import at.medunigraz.imi.bst.pmclassifier.featurepipes.Document2TokenSequencePipe;
+import cc.mallet.pipe.FeatureSequence2AugmentableFeatureVector;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.TokenSequence2FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class DataPreparator {
 
+    private static final Logger LOG = LogManager.getLogger();
 
-    public static List<TrecInstance> readGoldData(File topics, File documentJsonZip, File gsTable) throws DataReadingException {
+    private DataPreparator() {
+    }
 
-        TopicSet topicSet = new TopicSet(topics);
-        Map<Integer, Topic> topicsById = topicSet.getTopics().stream().collect(Collectors.toMap(t -> t.getNumber(), Function.identity()));
+    public static InstanceList getInstancesForGoldData(File documentJsonZip, File gsTable) throws DataReadingException {
 
         Map<String, Document> docsById = readDocuments(documentJsonZip);
-        List<TrecInstance> ret = createClassificationInstances(gsTable, topicsById, docsById);
+        InstanceList ret = createClassificationInstances(gsTable, docsById);
 
         return ret;
     }
 
-    private static List<TrecInstance> createClassificationInstances(File gsTable, Map<Integer, Topic> topicsById, Map<String, Document> docsById) throws DataReadingException {
-        List<TrecInstance> ret = new ArrayList<>();
+    public static List<String> getTextTerms(Document document) throws IOException {
+        StandardAnalyzer analyzer = new StandardAnalyzer();
+        TokenStream ts = analyzer.tokenStream("text", document.getTitle() + " " + document.getAbstractText());
+        ts.reset();
+        CharTermAttribute termAtt = ts.getAttribute(CharTermAttribute.class);
+        List<String> terms = new ArrayList<>();
+        while (ts.incrementToken()) {
+            String s = new String(termAtt.buffer(), 0, termAtt.length());
+            terms.add(s);
+        }
+        return terms;
+    }
+
+    public static InstanceList createClassificationInstances(File gsTable, Map<String, Document> docsById) throws DataReadingException {
+        InstanceList ret = new InstanceList(new SerialPipes(getPipes()));
+        addPMLabels(gsTable, docsById);
+        docsById.values().stream().map(doc -> new Instance(doc, doc.getPmLabel(), doc.getId(), "")).forEach(ret::addThruPipe);
+        return ret;
+    }
+
+    public static InstanceList createClassificationInstances(Map<String,Document> docsById) {
+        InstanceList ret = new InstanceList(new SerialPipes(getPipes()));
+        docsById.values().stream().map(doc -> new Instance(doc, doc.getPmLabel(), doc.getId(), "")).forEach(ret::addThruPipe);
+        return ret;
+    }
+
+    public static void addPMLabels(File gsTable, Map<String, Document> docsById) throws DataReadingException {
         try (CSVParser csvRecords = CSVFormat.TDF.withFirstRecordAsHeader().parse(FileUtilities.getReaderFromFile(gsTable))) {
             Iterator<CSVRecord> it = csvRecords.iterator();
             while (it.hasNext()) {
@@ -42,24 +76,30 @@ public class DataPreparator {
                 String pmRelDesc = record.get("pm_rel_desc");
                 int relevanceScore = Integer.parseInt(record.get("relevance_score"));
                 Document doc = docsById.get(trecDocId);
-                if (doc == null)
-                    throw new IllegalStateException("Null document for doc ID " + trecDocId + ". Record: " + record);
-                Topic topic = topicsById.get(trecTopicNumber);
-                TrecInstance instance = new TrecInstance();
-                instance.setTopic(topic);
-                instance.setDocument(doc);
-                instance.setPmLabel(pmRelDesc);
-                instance.setRelevanceScore(relevanceScore);
-                ret.add(instance);
+                if (doc == null) {
+                    LOG.warn("Null document for doc ID " + trecDocId + ". Record: " + record);
+                    continue;
+                    //throw new IllegalStateException("Null document for doc ID " + trecDocId + ". Record: " + record);
+                }
+                // "Once PM, always PM"
+                if (doc.getPmLabel() == null || doc.getPmLabel().equalsIgnoreCase("Not PM"))
+                    doc.setPMLabel(pmRelDesc);
             }
 
         } catch (IOException e1) {
             throw new DataReadingException(e1);
         }
-        return ret;
     }
 
-    private static Map<String, Document> readDocuments(File documentJsonZip) throws DataReadingException {
+    private static Collection<Pipe> getPipes() {
+        List<Pipe> pipes = new ArrayList<>();
+        pipes.add(new Document2TokenSequencePipe());
+        pipes.add(new TokenSequence2FeatureSequence());
+        pipes.add(new FeatureSequence2AugmentableFeatureVector(false));
+        return pipes;
+    }
+
+    public static Map<String, Document> readDocuments(File documentJsonZip) throws DataReadingException {
         Map<String, Document> docsById;
 
         try {
@@ -83,5 +123,5 @@ public class DataPreparator {
         return docsById;
     }
 
-    private DataPreparator(){}
+
 }

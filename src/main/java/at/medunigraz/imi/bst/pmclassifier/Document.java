@@ -1,6 +1,5 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -15,6 +14,7 @@ public class Document {
     private List<String> organisms;
     private List<String> meshTags;
     private List<String> meshTagsMajor;
+    private String pmLabel;
 
     public List<String> getMeshTags() {
         return meshTags;
@@ -80,5 +80,14 @@ public class Document {
 
     public void setOrganisms(List<String> organisms) {
         this.organisms = organisms;
+    }
+
+
+    public String getPmLabel() {
+        return pmLabel;
+    }
+
+    public void setPMLabel(String pmLabel) {
+        this.pmLabel = pmLabel;
     }
 }

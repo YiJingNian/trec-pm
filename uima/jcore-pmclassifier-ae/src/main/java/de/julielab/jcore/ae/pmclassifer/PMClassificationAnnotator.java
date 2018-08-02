@@ -9,6 +9,7 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
@@ -23,6 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@TypeCapability(inputs = {"de.julielab.jcore.types.Gene", "de.julielab.jcore.types.Organism", "de.julielab.jcore.types.Title", "de.julielab.jcore.types.AbstractText", "de.julielab.jcore.types.MeshHeading"})
 public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
     public static final String PARAM_PM_MODEL = "PmModel";
     private final static Logger log = LoggerFactory.getLogger(PMClassificationAnnotator.class);

@@ -132,13 +132,28 @@
             <nameValuePair>
                 <name>Table</name>
                 <value>
-                    <string>goldstandard</string>
+                    <string>trec2017gsdocs</string>
                 </value>
             </nameValuePair>
             <nameValuePair>
                 <name>StoreMaxXmiId</name>
                 <value>
                     <boolean>true</boolean>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>AdditionalTables</name>
+                <value>
+                    <array>
+                        <string>de.julielab.jcore.types.Gene</string>
+                        <string>de.julielab.jcore.types.Organism</string>
+                    </array>
+                </value>
+            </nameValuePair>
+            <nameValuePair>
+                <name>AdditionalTablesPostgresSchema</name>
+                <value>
+                    <string>_data_xmi</string>
                 </value>
             </nameValuePair>
         </configurationParameterSettings>

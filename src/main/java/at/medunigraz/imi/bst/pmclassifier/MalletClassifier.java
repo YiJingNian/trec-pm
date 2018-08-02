@@ -64,10 +64,22 @@ public class MalletClassifier implements Serializable{
 
     public void readClassifier(File source) throws IOException, ClassNotFoundException {
         LOG.info("Reading classifier from " + source.getAbsolutePath());
-        try (BufferedInputStream is = FileUtilities.getInputStreamFromFile(source); ObjectInputStream ois = new ObjectInputStream(is)) {
+        try (BufferedInputStream is = FileUtilities.getInputStreamFromFile(source)) {
+            readClassifier(is);
+        }
+    }
+
+    public void readClassifier(String source) throws IOException, ClassNotFoundException {
+        InputStream is = FileUtilities.findResource(source);
+        if (is == null)
+            throw new IllegalArgumentException("Could not find model at source as a file, URI or classpath resource");
+        readClassifier(is);
+    }
+
+    public void readClassifier(InputStream is) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(is)) {
             classifier = (Classifier) ois.readObject();
             instancePreparator = (InstancePreparator) ois.readObject();
         }
-
     }
 }

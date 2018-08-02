@@ -51,10 +51,11 @@ public class InstancePreparator implements Serializable {
     }
 
     public TFIDF getTfidf() {
-        if (tfidf == null)
+        if (tfidf == null) {
             if (tfIdfTrainData != null)
                 throw new IllegalStateException("TFIDF is requested, but it is not yet trained and the internal train data is also null");
-        trainTfIdfFromInternalTrainData();
+            trainTfIdfFromInternalTrainData();
+        }
         return tfidf;
     }
 

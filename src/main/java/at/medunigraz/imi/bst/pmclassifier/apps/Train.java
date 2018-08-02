@@ -23,11 +23,13 @@ public class Train {
         InstanceList instances = ip.createClassificationInstances(documents);
         LOG.info("Training the model");
         classifier.train(instances);
-        LOG.info("Storing the model to src/main/resources/models/malletPmClassifier.mod.gz");
-        classifier.writeClassifier(new File("src/main/resources/models/malletPmClassifier.mod.gz"));
+        String filename = "src/main/resources/models/malletPmClassifier.mod.gz";
+        LOG.info("Storing the model to " + filename);
+        classifier.writeClassifier(new File(filename));
 
         LOG.info("Loading model and doing reclassification of training data to check that training was in order.");
         classifier = new MalletClassifier();
+        classifier.readClassifier(filename);
         int corr = 0;
         for (Document doc : documents.values()) {
             String label = classifier.predict(doc);

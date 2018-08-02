@@ -44,6 +44,7 @@ public class MalletClassifier implements Serializable{
         Instance instance = classifier.getInstancePipe().instanceFrom(new Instance(document, "unknown", document.getId(), ""));
         Classification classification = classifier.classify(instance);
         Label bestLabel = classification.getLabeling().getBestLabel();
+        //classification.getLabeling().value(classifier.getInstancePipe().getTargetAlphabet().lookupIndex(""))
         return (String) bestLabel.getEntry();
     }
 

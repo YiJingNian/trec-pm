@@ -1,6 +1,7 @@
 package at.medunigraz.imi.bst.pmclassifier.featurepipes;
 
-import at.medunigraz.imi.bst.pmclassifier.DataPreparator;
+import at.medunigraz.imi.bst.pmclassifier.DataReader;
+import at.medunigraz.imi.bst.pmclassifier.InstancePreparator;
 import at.medunigraz.imi.bst.pmclassifier.Document;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
@@ -18,7 +19,7 @@ public class Document2TokenSequencePipe extends Pipe {
     public Instance pipe(Instance inst) {
         Document doc = (Document) inst.getData();
         try {
-            List<String> terms = DataPreparator.getTextTerms(doc);
+            List<String> terms = DataReader.getTextTerms(doc);
             TokenSequence ts = new TokenSequence(terms.size());
             terms.stream().map(Token::new).forEach(ts::add);
             inst.setData(ts);

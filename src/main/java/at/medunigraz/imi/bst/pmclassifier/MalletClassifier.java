@@ -11,9 +11,18 @@ import java.io.File;
 
 public class MalletClassifier {
     private Classifier classifier;
+    private InstancePreparator instancePreparator;
+
+    public InstancePreparator getInstancePreparator() {
+        return instancePreparator;
+    }
+
+    public void setInstancePreparator(InstancePreparator instancePreparator) {
+        this.instancePreparator = instancePreparator;
+    }
 
     public void train(File documentJsonZip, File gsTable) throws DataReadingException {
-        InstanceList instances = DataPreparator.getInstancesForGoldData(documentJsonZip, gsTable);
+        InstanceList instances = instancePreparator.getInstancesForGoldData(documentJsonZip, gsTable);
         train(instances);
     }
 

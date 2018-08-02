@@ -11,7 +11,7 @@ public class HasGenesPipe extends Pipe {
         Document document = (Document) inst.getSource();
         Token token = (Token) inst.getData();
         if (document.getGenes() != null) {
-            token.setFeatureValue("hasGenes", 1);
+            token.setFeatureValue("hasGenes", document.getGenes().size());
         }
         return inst;
     }

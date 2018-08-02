@@ -1,5 +1,6 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
+import at.medunigraz.imi.bst.trec.model.TopicSet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.csv.CSVFormat;
@@ -91,5 +92,7 @@ public class DataReader {
 
     private DataReader() {
     }
-
+public static void main(String args[]) {
+    new TopicSet(new File(""))
+}
 }

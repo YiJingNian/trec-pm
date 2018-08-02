@@ -24,6 +24,7 @@ public class Document2TokenSequencePipe extends Pipe {
             inst.setData(ts);
             Label label = ((LabelAlphabet) getTargetAlphabet()).lookupLabel(inst.getTarget());
             inst.setTarget(label);
+            inst.setSource(doc);
         } catch (IOException e) {
             e.printStackTrace();
         }

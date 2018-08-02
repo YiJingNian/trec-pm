@@ -1,9 +1,6 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
-import at.medunigraz.imi.bst.pmclassifier.featurepipes.Document2TokenPipe;
-import at.medunigraz.imi.bst.pmclassifier.featurepipes.Document2TokenSequencePipe;
-import at.medunigraz.imi.bst.pmclassifier.featurepipes.MeshTagsForTokenSequencePipe;
-import at.medunigraz.imi.bst.pmclassifier.featurepipes.TfIdfPipe;
+import at.medunigraz.imi.bst.pmclassifier.featurepipes.*;
 import cc.mallet.pipe.*;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
@@ -102,6 +99,7 @@ public class InstancePreparator implements Serializable {
         List<Pipe> pipes = new ArrayList<>();
         pipes.add(new Document2TokenPipe());
         pipes.add(new TfIdfPipe());
+        pipes.add(new HasGenesPipe());
         pipes.add(new Token2FeatureVector());
         return pipes;
     }

@@ -50,8 +50,6 @@ public class CrossVal {
             InstanceList ilist = ip.createClassificationInstances(train);
             LOG.info("Training on " + train.size() + " documents");
             classifier.train(ilist);
-            classifier.writeClassifier(new File("tmp.gz"));
-            classifier.readClassifier(new File("tmp.gz"));
 
             LOG.info("Testing on " + test.size() + " documents");
             int corr = 0;

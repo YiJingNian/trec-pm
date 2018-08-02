@@ -21,12 +21,14 @@ public class CrossVal {
     private static final Logger LOG = LogManager.getLogger();
     private final static int randomSeed = 1;
 
-    public static void main(String args[]) throws DataReadingException, IOException {
+    public static void main(String args[]) throws DataReadingException, IOException, ClassNotFoundException {
         MalletClassifier classifier = new MalletClassifier();
         int numFolds = 10;
 
         Map<String, Document> documents = DataReader.readDocuments(new File("resources/gs2017DocsJson.zip"));
-        InstancePreparator ip = new InstancePreparator();
+        InstancePreparator ip = InstancePreparator.getInstance();
+        classifier.setInstancePreparator(ip);
+
         ip.trainTfIdf(documents.values());
 
         DataReader.addPMLabels(new File("resources/20180622processedGoldStandardTopics.tsv.gz"), documents);
@@ -48,6 +50,8 @@ public class CrossVal {
             InstanceList ilist = ip.createClassificationInstances(train);
             LOG.info("Training on " + train.size() + " documents");
             classifier.train(ilist);
+            classifier.writeClassifier(new File("tmp.gz"));
+            classifier.readClassifier(new File("tmp.gz"));
 
             LOG.info("Testing on " + test.size() + " documents");
             int corr = 0;

@@ -20,20 +20,38 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
-public class InstancePreparator {
+public class InstancePreparator implements Serializable {
+
+    private static final long serialVersionUID = 2018_08_02L;
+
+    private static final Logger LOG = LogManager.getLogger();
+
+    private static InstancePreparator service;
+
+    private transient TFIDF tfidf;
+    private List<String> tfIdfTrainData;
+
+    private InstancePreparator() {
+    }
+
+    public static InstancePreparator getInstance(){
+        if (service == null)
+            service = new InstancePreparator();
+        return service;
+    }
+
     public TFIDF getTfidf() {
+        if (tfidf == null && tfIdfTrainData != null)
+            trainTfIdfFromInternalTrainData();
         return tfidf;
     }
 
     public void setTfidf(TFIDF tfidf) {
         this.tfidf = tfidf;
     }
-
-    private static final Logger LOG = LogManager.getLogger();
-
-    private TFIDF tfidf;
 
     public InstanceList getInstancesForGoldData(File documentJsonZip, File gsTable) throws DataReadingException {
 
@@ -57,10 +75,20 @@ public class InstancePreparator {
     }
 
     public void trainTfIdf(Collection<Document> documents) {
-        tfidf = new TFIDF();
-        List<StringWrapper> trainData = new ArrayList<>(documents.size());
+        tfIdfTrainData = new ArrayList<>();
         for (Document doc : documents) {
-            trainData.add(new BasicStringWrapper(doc.getTitle() + " " + doc.getAbstractText()));
+            String text = doc.getTitle() + " " + doc.getAbstractText();
+            tfIdfTrainData.add(text);
+        }
+        trainTfIdfFromInternalTrainData();
+    }
+
+    private void trainTfIdfFromInternalTrainData() {
+        assert tfIdfTrainData != null : "The training data for TF/IDF has not been set.";
+        tfidf = new TFIDF();
+        List<StringWrapper> trainData = new ArrayList<>(tfIdfTrainData.size());
+        for (String str : tfIdfTrainData) {
+            trainData.add(new BasicStringWrapper(str));
         }
         tfidf.train(new BasicStringWrapperIterator(trainData.iterator()));
     }
@@ -73,11 +101,10 @@ public class InstancePreparator {
     private Collection<Pipe> getTfIdfPipes() {
         List<Pipe> pipes = new ArrayList<>();
         pipes.add(new Document2TokenPipe());
-        pipes.add(new TfIdfPipe(tfidf));
+        pipes.add(new TfIdfPipe());
         pipes.add(new Token2FeatureVector());
         return pipes;
     }
-
 
 
     private Collection<Pipe> getWordBasedPipes() {

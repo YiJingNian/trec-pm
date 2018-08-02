@@ -6,10 +6,18 @@ import cc.mallet.classify.MaxEntTrainer;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Label;
+import de.julielab.java.utilities.FileUtilities;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.File;
+import java.io.*;
+import java.rmi.server.UID;
 
-public class MalletClassifier {
+public class MalletClassifier implements Serializable{
+
+    private static final long serialVersionUID = 2018_08_02L;
+
+    private static final Logger LOG = LogManager.getLogger();
     private Classifier classifier;
     private InstancePreparator instancePreparator;
 
@@ -41,5 +49,24 @@ public class MalletClassifier {
 
     public Classifier getClassifier() {
         return classifier;
+    }
+
+    public void writeClassifier(File destination) throws IOException {
+        LOG.info("Writing classifier to " + destination.getAbsolutePath());
+        try (BufferedOutputStream os = FileUtilities.getOutputStreamToFile(destination); ObjectOutputStream oos = new ObjectOutputStream(os)) {
+            oos.writeObject(classifier);
+            oos.writeObject(instancePreparator);
+        }
+    }
+
+
+
+    public void readClassifier(File source) throws IOException, ClassNotFoundException {
+        LOG.info("Reading classifier from " + source.getAbsolutePath());
+        try (BufferedInputStream is = FileUtilities.getInputStreamFromFile(source); ObjectInputStream ois = new ObjectInputStream(is)) {
+            classifier = (Classifier) ois.readObject();
+            instancePreparator = (InstancePreparator) ois.readObject();
+        }
+
     }
 }

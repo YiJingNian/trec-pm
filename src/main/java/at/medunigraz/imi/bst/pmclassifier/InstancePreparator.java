@@ -2,6 +2,8 @@ package at.medunigraz.imi.bst.pmclassifier;
 
 import at.medunigraz.imi.bst.pmclassifier.featurepipes.*;
 import cc.mallet.pipe.*;
+import cc.mallet.pipe.tsf.LexiconMembership;
+import cc.mallet.pipe.tsf.TrieLexiconMembership;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import com.wcohen.ss.BasicStringWrapper;
@@ -16,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
@@ -100,6 +103,7 @@ public class InstancePreparator implements Serializable {
         pipes.add(new Document2TokenPipe());
         pipes.add(new TfIdfPipe());
         pipes.add(new HasGenesPipe());
+        pipes.add(new MeshTagsForTokenPipe());
         pipes.add(new Token2FeatureVector());
         return pipes;
     }

@@ -1,9 +1,8 @@
 package de.julielab.jcore.ae.pmclassifer;
 
+import at.medunigraz.imi.bst.pmclassifier.Document;
 import at.medunigraz.imi.bst.pmclassifier.MalletClassifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.julielab.ipc.javabridge.Options;
-import de.julielab.ipc.javabridge.StdioBridge;
 import de.julielab.jcore.types.*;
 import de.julielab.jcore.utility.JCoReTools;
 import org.apache.uima.UimaContext;
@@ -18,8 +17,10 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
@@ -30,6 +31,32 @@ public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
     private String pmModel;
     private MalletClassifier mc;
 
+    private static Document createClassifierInput(JCas aJCas) {
+        Collection<Title> titles = JCasUtil.select(aJCas, Title.class);
+        Collection<AbstractText> abstractTexts = JCasUtil.select(aJCas, AbstractText.class);
+        Collection<MeshHeading> meshHeadings = JCasUtil.select(aJCas, MeshHeading.class);
+        Collection<Gene> genes = JCasUtil.select(aJCas, Gene.class);
+        Collection<Organism> organisms = JCasUtil.select(aJCas, Organism.class);
+
+        String title = titles.stream().map(Annotation::getCoveredText).collect(Collectors.joining(" "));
+        String abstractText = abstractTexts.stream().map(Annotation::getCoveredText).collect(Collectors.joining(" "));
+        List<String> allMesh = meshHeadings.stream().map(h -> h.getDescriptorName()).collect(Collectors.toList());
+        List<String> meshMajor = meshHeadings.stream().filter(h -> h.getDescriptorNameMajorTopic()).map(h -> h.getDescriptorName()).collect(Collectors.toList());
+        List<String> meshMinor = meshHeadings.stream().filter(h -> !h.getDescriptorNameMajorTopic()).map(h -> h.getDescriptorName()).collect(Collectors.toList());
+        List<String> geneNames = genes.stream().map(Annotation::getCoveredText).map(String::toLowerCase).collect(Collectors.toList());
+        List<String> organismNames = organisms.stream().map(Annotation::getCoveredText).map(String::toLowerCase).collect(Collectors.toList());
+
+        Document document = new Document();
+        document.setTitle(title);
+        document.setAbstractText(abstractText);
+        document.setMeshTags(allMesh);
+        document.setMeshMinor(meshMinor);
+        document.setMeshTagsMajor(meshMajor);
+        document.setGenes(geneNames);
+        document.setOrganisms(organismNames);
+
+        return document;
+    }
 
     /**
      * This method is called a single time by the framework at component
@@ -44,6 +71,11 @@ public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
         }
         pmModel = (String) aContext.getConfigParameterValue(PARAM_PM_MODEL);
         mc = new MalletClassifier();
+        try {
+            mc.readClassifier(new File(pmModel));
+        } catch (IOException | ClassNotFoundException e) {
+            throw new ResourceInitializationException(e);
+        }
 
         om = new ObjectMapper();
     }
@@ -54,62 +86,19 @@ public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
      */
     @Override
     public void process(final JCas aJCas) throws AnalysisEngineProcessException {
-        ClassifierInput classifierInput = createClassifierInput(aJCas);
-        Map<String, ClassifierInput> inputMap = new HashMap<>();
-        inputMap.put("0", classifierInput);
+        Document classifierInput = createClassifierInput(aJCas);
+        String label = mc.predict(classifierInput);
+        AutoDescriptor ad;
         try {
-            String stringValue = om.writeValueAsString(inputMap);
-            Optional<String> responseO = classifierBridge.sendAndReceive(stringValue).findAny();
-            if (!responseO.isPresent()) {
-                throw new IllegalStateException("The STDIO bridge to the Python PM classifier did not return a value");
-            } else {
-                String response = responseO.get();
-                String[] outcomes = om.readValue(response, String[].class);
-                if (outcomes.length > 1)
-                    throw new IllegalStateException("The PM classifier returned " + outcomes.length + " outcomes but only 1 was expected.");
-                AutoDescriptor ad;
-                try {
-                    ad = JCasUtil.selectSingle(aJCas, AutoDescriptor.class);
-                } catch (IllegalArgumentException e) {
-                    ad = new AutoDescriptor(aJCas);
-                    ad.addToIndexes();
-                }
-                DocumentClass documentClass = new DocumentClass(aJCas);
-                if (outcomes[0].equals("1"))
-                    documentClass.setClassname("PM");
-                else
-                    documentClass.setClassname("Not PM");
-                FSArray newArray = JCoReTools.addToFSArray(ad.getDocumentClasses(), documentClass);
-                ad.setDocumentClasses(newArray);
-            }
-        } catch (InterruptedException | IOException e) {
-            throw new AnalysisEngineProcessException(e);
+            ad = JCasUtil.selectSingle(aJCas, AutoDescriptor.class);
+        } catch (IllegalArgumentException e) {
+            ad = new AutoDescriptor(aJCas);
+            ad.addToIndexes();
         }
+        DocumentClass documentClass = new DocumentClass(aJCas);
+        documentClass.setClassname(label);
+        FSArray newArray = JCoReTools.addToFSArray(ad.getDocumentClasses(), documentClass);
+        ad.setDocumentClasses(newArray);
     }
 
-    private static ClassifierInput createClassifierInput(JCas aJCas) {
-        Collection<Title> titles = JCasUtil.select(aJCas, Title.class);
-        Collection<AbstractText> abstractTexts = JCasUtil.select(aJCas, AbstractText.class);
-        Collection<MeshHeading> meshHeadings = JCasUtil.select(aJCas, MeshHeading.class);
-
-        if (meshHeadings.isEmpty())
-            log.warn("Did not find any MeSH Headings in document {}", JCoReTools.getDocId(aJCas));
-
-        String title = titles.stream().map(Annotation::getCoveredText).collect(Collectors.joining(" "));
-        String abstractText = abstractTexts.stream().map(Annotation::getCoveredText).collect(Collectors.joining(" "));
-        String meshMajor = meshHeadings.stream().filter(h -> h.getDescriptorNameMajorTopic()).map(h -> h.getDescriptorName()).collect(Collectors.joining(" "));
-        String meshMinor = meshHeadings.stream().filter(h -> !h.getDescriptorNameMajorTopic()).map(h -> h.getDescriptorName()).collect(Collectors.joining(" "));
-
-        return new ClassifierInput(title, abstractText, meshMajor, meshMinor);
-    }
-
-    @Override
-    public void collectionProcessComplete() throws AnalysisEngineProcessException {
-        super.collectionProcessComplete();
-        try {
-            classifierBridge.stop();
-        } catch (InterruptedException e) {
-            throw new AnalysisEngineProcessException(e);
-        }
-    }
 }

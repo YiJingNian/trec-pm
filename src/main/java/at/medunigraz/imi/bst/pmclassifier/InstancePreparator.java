@@ -44,6 +44,8 @@ public class InstancePreparator implements Serializable {
     }
 
     public TFIDF getTfidf() {
+        System.out.println(tfidf);
+        System.out.println(tfIdfTrainData);
         if (tfidf == null && tfIdfTrainData != null)
             trainTfIdfFromInternalTrainData();
         return tfidf;

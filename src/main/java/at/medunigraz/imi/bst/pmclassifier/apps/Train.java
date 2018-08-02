@@ -18,11 +18,6 @@ public class Train {
     public static void main(String args[]) throws DataReadingException, IOException, ClassNotFoundException {
         MalletClassifier classifier = new MalletClassifier();
 
-
-        byte[] bytes = IOUtils.toByteArray(new GZIPInputStream(new FileInputStream("src/main/resources/models/malletPmClassifier.mod.gz")));
-        System.out.println(Arrays.toString(Arrays.copyOfRange(bytes, 0, 100)));
-        System.exit(-1);
-
         LOG.info("Reading documents");
         Map<String, Document> documents = DataReader.readDocuments(new File("resources/gs2017DocsJson.zip"));
         DataReader.addPMLabels(new File("resources/20180622processedGoldStandardTopics.tsv.gz"), documents);

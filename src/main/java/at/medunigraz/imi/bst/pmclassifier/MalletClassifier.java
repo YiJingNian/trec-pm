@@ -80,6 +80,7 @@ public class MalletClassifier implements Serializable{
         try (ObjectInputStream ois = new ObjectInputStream(is)) {
             classifier = (Classifier) ois.readObject();
             instancePreparator = (InstancePreparator) ois.readObject();
+            instancePreparator.setAsInstance();
         }
     }
 }

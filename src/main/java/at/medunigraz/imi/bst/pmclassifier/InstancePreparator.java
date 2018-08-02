@@ -30,7 +30,6 @@ public class InstancePreparator implements Serializable {
     private static final Logger LOG = LogManager.getLogger();
 
     private static InstancePreparator service;
-    private static InstancePreparator serializationInstance;
 
     private transient TFIDF tfidf;
     private List<String> tfIdfTrainData;
@@ -40,14 +39,13 @@ public class InstancePreparator implements Serializable {
 
     public static InstancePreparator getInstance() {
         if (service == null) {
-            if (serializationInstance != null) {
-                service = serializationInstance;
-            } else {
-                service = new InstancePreparator();
-                serializationInstance = service;
-            }
+            service = new InstancePreparator();
         }
         return service;
+    }
+
+    void setAsInstance() {
+        service = this;
     }
 
     public TFIDF getTfidf() {
@@ -127,6 +125,5 @@ public class InstancePreparator implements Serializable {
         pipes.add(new FeatureSequence2AugmentableFeatureVector(false));
         return pipes;
     }
-
 
 }

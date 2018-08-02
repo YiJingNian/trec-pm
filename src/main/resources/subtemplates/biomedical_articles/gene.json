@@ -1,6 +1,6 @@
 {
   "dis_max": {
-    "boost": 1,
+    "boost": 1.5,
     "queries": [
       {
         "multi_match": {

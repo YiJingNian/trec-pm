@@ -5,3 +5,8 @@ prognostic
 clinical
 prognosis
 therapy
+outcome
+kinase
+resistance
+Gleason
+targets

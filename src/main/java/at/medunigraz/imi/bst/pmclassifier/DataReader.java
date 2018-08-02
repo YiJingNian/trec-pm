@@ -72,9 +72,13 @@ public class DataReader {
     }
 
     public static List<String> getTextTerms(Document document) throws IOException {
-        StandardAnalyzer analyzer = new StandardAnalyzer();
         String documentText = document.getTitle() + " " + document.getAbstractText();
-        TokenStream ts = analyzer.tokenStream("text", documentText);
+        return getTextTerms(documentText);
+    }
+
+    public static List<String> getTextTerms(String text) throws IOException {
+        StandardAnalyzer analyzer = new StandardAnalyzer();
+        TokenStream ts = analyzer.tokenStream("text", text);
         ts.reset();
         CharTermAttribute termAtt = ts.getAttribute(CharTermAttribute.class);
         List<String> terms = new ArrayList<>();

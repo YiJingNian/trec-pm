@@ -11,10 +11,15 @@ import com.wcohen.ss.BasicStringWrapper;
 import com.wcohen.ss.BasicStringWrapperIterator;
 import com.wcohen.ss.TFIDF;
 import com.wcohen.ss.api.StringWrapper;
+import com.wcohen.ss.api.Token;
+import com.wcohen.ss.api.Tokenizer;
+import com.wcohen.ss.tokens.BasicSourcedToken;
+import com.wcohen.ss.tokens.BasicToken;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class InstancePreparator {

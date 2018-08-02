@@ -1,5 +1,6 @@
 package de.julielab.jcore.ae.pmclassifer;
 
+import at.medunigraz.imi.bst.pmclassifier.MalletClassifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.julielab.ipc.javabridge.Options;
 import de.julielab.ipc.javabridge.StdioBridge;
@@ -22,21 +23,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
-    public static final String PARAM_EXECUTABLE = "PythonExecutable";
-    public static final String PARAM_SCRIPT = "ScriptPath";
-    public static final String PARAM_TFIDFMODEL = "TfidfModel";
     public static final String PARAM_PM_MODEL = "PmModel";
     private final static Logger log = LoggerFactory.getLogger(PMClassificationAnnotator.class);
-    private StdioBridge classifierBridge;
     private ObjectMapper om;
-    @ConfigurationParameter(name = PARAM_EXECUTABLE)
-    private String pythonExecutable;
-    @ConfigurationParameter(name = PARAM_SCRIPT)
-    private String scriptPath;
-    @ConfigurationParameter(name = PARAM_TFIDFMODEL)
-    private String tfidfModel;
     @ConfigurationParameter(name = PARAM_PM_MODEL)
     private String pmModel;
+    private MalletClassifier mc;
 
 
     /**
@@ -50,23 +42,9 @@ public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
             for (String configName : aContext.getConfigParameterNames())
                 log.info("{}: {}", configName, aContext.getConfigParameterValue(configName));
         }
-        pythonExecutable = (String) aContext.getConfigParameterValue(PARAM_EXECUTABLE);
-        scriptPath = (String) aContext.getConfigParameterValue(PARAM_SCRIPT);
-        tfidfModel = (String) aContext.getConfigParameterValue(PARAM_TFIDFMODEL);
         pmModel = (String) aContext.getConfigParameterValue(PARAM_PM_MODEL);
+        mc = new MalletClassifier();
 
-
-        Options options = new Options();
-        options.setExecutable(pythonExecutable);
-        options.setResultLineIndicator(line -> line.startsWith("Result: "));
-        options.setResultTransformator(line -> line.substring(8));
-        classifierBridge = new StdioBridge(options, "-u", scriptPath, pmModel, tfidfModel);
-        try {
-            classifierBridge.start();
-        } catch (IOException e) {
-            log.error("Could not start the STDIO connection to the Python PM classifier.", e);
-            throw new ResourceInitializationException(e);
-        }
         om = new ObjectMapper();
     }
 

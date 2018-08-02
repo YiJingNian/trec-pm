@@ -21,6 +21,7 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -42,7 +43,10 @@ public class DataPreparator {
 
     public static List<String> getTextTerms(Document document) throws IOException {
         StandardAnalyzer analyzer = new StandardAnalyzer();
-        TokenStream ts = analyzer.tokenStream("text", document.getTitle() + " " + document.getAbstractText());
+        String documentText = document.getTitle() + " " + document.getAbstractText();
+        if (document.getMeshTags() != null)
+            documentText += document.getMeshTags().stream().collect(Collectors.joining(" "));
+        TokenStream ts = analyzer.tokenStream("text", documentText);
         ts.reset();
         CharTermAttribute termAtt = ts.getAttribute(CharTermAttribute.class);
         List<String> terms = new ArrayList<>();
@@ -60,7 +64,7 @@ public class DataPreparator {
         return ret;
     }
 
-    public static InstanceList createClassificationInstances(Map<String,Document> docsById) {
+    public static InstanceList createClassificationInstances(Map<String, Document> docsById) {
         InstanceList ret = new InstanceList(new SerialPipes(getPipes()));
         docsById.values().stream().map(doc -> new Instance(doc, doc.getPmLabel(), doc.getId(), "")).forEach(ret::addThruPipe);
         return ret;

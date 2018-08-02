@@ -20,7 +20,8 @@
         }
       },
       {{diseaseSynonyms:clinical_trials/disease_synonym.json}},
-      {{diseaseHypernyms:clinical_trials/disease_hypernym.json}}
+      {{diseaseHypernyms:clinical_trials/disease_hypernym.json}},
+      {{match_all.json}}
     ]
   }
 }

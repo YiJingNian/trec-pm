@@ -74,7 +74,7 @@ public class PMClassificationAnnotator extends JCasAnnotator_ImplBase {
         pmModel = (String) aContext.getConfigParameterValue(PARAM_PM_MODEL);
         mc = new MalletClassifier();
         try {
-            mc.readClassifier(new File(pmModel));
+            mc.readClassifier(pmModel);
         } catch (IOException | ClassNotFoundException e) {
             throw new ResourceInitializationException(e);
         }

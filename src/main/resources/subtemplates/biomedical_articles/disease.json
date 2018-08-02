@@ -19,7 +19,8 @@
           "boost": 0.1
         }
       },
-      {{diseaseSynonyms:biomedical_articles/disease_synonym.json}}
+      {{diseaseSynonyms:biomedical_articles/disease_synonym.json}},
+      {{match_all.json}}
     ]
   }
 }

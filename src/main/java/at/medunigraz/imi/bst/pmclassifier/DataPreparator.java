@@ -1,6 +1,7 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
 import at.medunigraz.imi.bst.pmclassifier.featurepipes.Document2TokenSequencePipe;
+import at.medunigraz.imi.bst.pmclassifier.featurepipes.MeshTagsPipe;
 import cc.mallet.pipe.FeatureSequence2AugmentableFeatureVector;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.SerialPipes;
@@ -8,7 +9,6 @@ import cc.mallet.pipe.TokenSequence2FeatureSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -19,9 +19,10 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -44,8 +45,8 @@ public class DataPreparator {
     public static List<String> getTextTerms(Document document) throws IOException {
         StandardAnalyzer analyzer = new StandardAnalyzer();
         String documentText = document.getTitle() + " " + document.getAbstractText();
-        if (document.getMeshTags() != null)
-            documentText += document.getMeshTags().stream().collect(Collectors.joining(" "));
+        //if (document.getMeshTags() != null)
+         //   documentText += document.getMeshTags().stream().collect(Collectors.joining(" "));
         TokenStream ts = analyzer.tokenStream("text", documentText);
         ts.reset();
         CharTermAttribute termAtt = ts.getAttribute(CharTermAttribute.class);
@@ -98,6 +99,7 @@ public class DataPreparator {
     private static Collection<Pipe> getPipes() {
         List<Pipe> pipes = new ArrayList<>();
         pipes.add(new Document2TokenSequencePipe());
+        pipes.add(new MeshTagsPipe());
         pipes.add(new TokenSequence2FeatureSequence());
         pipes.add(new FeatureSequence2AugmentableFeatureVector(false));
         return pipes;

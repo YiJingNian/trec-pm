@@ -1,0 +1,20 @@
+{
+    "categories": [
+        "reader"
+    ],
+    "description": "This reader specifically reads the extra abstracts from the AACR and ASCO journals delivered for the TREC Pm 2017/2018 challenges. It just seperates the titles from the abstracts.",
+    "descriptors": [
+        {
+            "category": "reader",
+            "location": "de.julielab.jcore.reader.trecpmextra.desc.jcore-trecpm-extraabstracts-reader"
+        }
+    ],
+    "exposable": true,
+    "group": "general",
+    "maven-artifact": {
+        "artifactId": "jcore-trecpm-extraabstracts-reader",
+        "groupId": "de.julielab",
+        "version": "2.3.0-SNAPSHOT"
+    },
+    "name": "JCoRe TREC PM Extra Abstracts Reader"
+}

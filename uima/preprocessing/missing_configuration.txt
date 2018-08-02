@@ -1,0 +1,6 @@
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "CostosysConfigFile" is not set.
+
+Component name: JCoRe XMI Database Writer
+The mandatory parameter "DocumentTable" is not set.
+

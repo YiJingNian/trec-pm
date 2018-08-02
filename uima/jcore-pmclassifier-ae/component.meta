@@ -1,0 +1,20 @@
+{
+    "categories": [
+        "ae"
+    ],
+    "description": "An AE that is a wrapper around the Precision Medicine Classifier delivered by the HPI coded in Python\n        using auto-sklearn.\n    ",
+    "descriptors": [
+        {
+            "category": "ae",
+            "location": "de.julielab.jcore.ae.pmclassifer.desc.jcore-pmclassifier-ae"
+        }
+    ],
+    "exposable": true,
+    "group": "general",
+    "maven-artifact": {
+        "artifactId": "jcore-pmclassifier-ae",
+        "groupId": "de.julielab",
+        "version": "2.3.0-SNAPSHOT"
+    },
+    "name": "JCoRe Precision Medicine Classifier"
+}

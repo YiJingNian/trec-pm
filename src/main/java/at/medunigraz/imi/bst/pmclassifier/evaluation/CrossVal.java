@@ -1,17 +1,18 @@
 package at.medunigraz.imi.bst.pmclassifier.evaluation;
 
-import at.medunigraz.imi.bst.pmclassifier.DataPreparator;
-import at.medunigraz.imi.bst.pmclassifier.DataReadingException;
-import at.medunigraz.imi.bst.pmclassifier.Document;
-import at.medunigraz.imi.bst.pmclassifier.MalletClassifier;
+import at.medunigraz.imi.bst.pmclassifier.*;
 import cc.mallet.types.InstanceList;
+import com.wcohen.ss.TFIDF;
+import com.wcohen.ss.api.StringWrapper;
+import com.wcohen.ss.api.Token;
+import com.wcohen.ss.tokens.BasicToken;
+import de.julielab.java.utilities.CLIInteractionUtilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.*;
@@ -20,12 +21,15 @@ public class CrossVal {
     private static final Logger LOG = LogManager.getLogger();
     private final static int randomSeed = 1;
 
-    public static void main(String args[]) throws DataReadingException {
+    public static void main(String args[]) throws DataReadingException, IOException {
         MalletClassifier classifier = new MalletClassifier();
         int numFolds = 10;
 
-        Map<String, Document> documents = DataPreparator.readDocuments(new File("resources/gs2017DocsJson.zip"));
-        DataPreparator.addPMLabels(new File("resources/20180622processedGoldStandardTopics.tsv.gz"), documents);
+        Map<String, Document> documents = DataReader.readDocuments(new File("resources/gs2017DocsJson.zip"));
+        InstancePreparator ip = new InstancePreparator();
+        ip.trainTfIdf(documents.values());
+
+        DataReader.addPMLabels(new File("resources/20180622processedGoldStandardTopics.tsv.gz"), documents);
         List<Document> pmList = documents.values().stream().filter(d -> !d.getPmLabel().equalsIgnoreCase("Not PM")).
                 sorted(Comparator.comparing(Document::getId)).
                 collect(toList());
@@ -41,7 +45,7 @@ public class CrossVal {
             Map<String, Document> train = IntStream.range(0, numFolds).filter(i -> i != currentFold).mapToObj(partitions::get).flatMap(Collection::stream).collect(toMap(Document::getId, d -> d));
             Map<String, Document> test = partitions.get(fold).stream().collect(toMap(Document::getId, d -> d));
 
-            InstanceList ilist = DataPreparator.createClassificationInstances(train);
+            InstanceList ilist = ip.createClassificationInstances(train);
             LOG.info("Training on " + train.size() + " documents");
             classifier.train(ilist);
 
@@ -72,6 +76,12 @@ public class CrossVal {
         List<List<Document>> ret = new ArrayList<>(numFolds);
         for (int i = 0; i < numFolds; i++)
             ret.add(new ArrayList<>());
+
+        List<Document> pmListShuffled = new ArrayList<>(pmList);
+        List<Document> notPmListShuffled = new ArrayList<>(notPmList);
+
+        Collections.shuffle(pmListShuffled, new Random(randomSeed));
+        Collections.shuffle(notPmList, new Random(randomSeed));
 
         for (int i = 0; i < Math.max(pmList.size(), notPmList.size()); i++) {
             int mod = i % numFolds;

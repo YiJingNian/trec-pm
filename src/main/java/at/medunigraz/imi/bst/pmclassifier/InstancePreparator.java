@@ -30,6 +30,7 @@ public class InstancePreparator implements Serializable {
     private static final Logger LOG = LogManager.getLogger();
 
     private static InstancePreparator service;
+    private static InstancePreparator serializationInstance;
 
     private transient TFIDF tfidf;
     private List<String> tfIdfTrainData;
@@ -37,17 +38,23 @@ public class InstancePreparator implements Serializable {
     private InstancePreparator() {
     }
 
-    public static InstancePreparator getInstance(){
-        if (service == null)
-            service = new InstancePreparator();
+    public static InstancePreparator getInstance() {
+        if (service == null) {
+            if (serializationInstance != null) {
+                service = serializationInstance;
+            } else {
+                service = new InstancePreparator();
+                serializationInstance = service;
+            }
+        }
         return service;
     }
 
     public TFIDF getTfidf() {
-        System.out.println(tfidf);
-        System.out.println(tfIdfTrainData);
-        if (tfidf == null && tfIdfTrainData != null)
-            trainTfIdfFromInternalTrainData();
+        if (tfidf == null)
+            if (tfIdfTrainData != null)
+                throw new IllegalStateException("TFIDF is requested, but it is not yet trained and the internal train data is also null");
+        trainTfIdfFromInternalTrainData();
         return tfidf;
     }
 

@@ -2,16 +2,12 @@ package at.medunigraz.imi.bst.pmclassifier.apps;
 
 import at.medunigraz.imi.bst.pmclassifier.*;
 import cc.mallet.types.InstanceList;
-import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
 
 public class Train {
     private static final Logger LOG = LogManager.getLogger();
@@ -30,7 +26,8 @@ public class Train {
         LOG.info("Storing the model to src/main/resources/models/malletPmClassifier.mod.gz");
         classifier.writeClassifier(new File("src/main/resources/models/malletPmClassifier.mod.gz"));
 
-        LOG.info("Doing reclassification of training data to check that training was in order.");
+        LOG.info("Loading model and doing reclassification of training data to check that training was in order.");
+        classifier = new MalletClassifier();
         int corr = 0;
         for (Document doc : documents.values()) {
             String label = classifier.predict(doc);

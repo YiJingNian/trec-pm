@@ -46,6 +46,7 @@ public class CrossVal {
             LOG.info("Training on " + train.size() + " documents");
             classifier.train(ilist);
             classifier.writeClassifier(new File("tmp.gz"));
+            ip.setTfidf(null);
             classifier.readClassifier("tmp.gz");
 
             LOG.info("Testing on " + test.size() + " documents");

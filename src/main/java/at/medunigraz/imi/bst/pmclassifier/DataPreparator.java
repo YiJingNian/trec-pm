@@ -8,7 +8,6 @@ import cc.mallet.pipe.TokenSequence2FeatureSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;

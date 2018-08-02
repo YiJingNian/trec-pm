@@ -1,5 +1,6 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
+import at.medunigraz.imi.bst.trec.model.Topic;
 import at.medunigraz.imi.bst.trec.model.TopicSet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.julielab.java.utilities.FileUtilities;
@@ -22,6 +23,9 @@ import java.util.zip.ZipFile;
 
 public class DataReader {
     private static final Logger LOG = LogManager.getLogger();
+
+    private DataReader() {
+    }
 
     public static Map<String, Document> readDocuments(File documentJsonZip) throws DataReadingException {
         Map<String, Document> docsById;
@@ -89,10 +93,4 @@ public class DataReader {
         }
         return terms;
     }
-
-    private DataReader() {
-    }
-public static void main(String args[]) {
-    new TopicSet(new File(""))
-}
 }

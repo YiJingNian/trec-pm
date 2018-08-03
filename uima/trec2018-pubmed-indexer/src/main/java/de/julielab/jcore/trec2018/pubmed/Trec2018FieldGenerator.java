@@ -93,6 +93,9 @@ public class Trec2018FieldGenerator extends FieldGenerator {
             }
             document.addField("documentClasses", arrayFieldValue);
         } else {
+            if (any.isPresent())
+                System.out.println("AD found but getDocumentClasses is null");
+            else
             System.out.println("No AD found");
         }
     }

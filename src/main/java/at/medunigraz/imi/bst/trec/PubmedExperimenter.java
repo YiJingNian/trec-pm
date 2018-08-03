@@ -19,7 +19,7 @@ public class PubmedExperimenter {
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
 		// hpipubboost
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target)
+		builder.newExperiment().withName("hpipubboost").withYear(year).withGoldStandard(goldStandard).withTarget(target)
 				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym()
                 .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
 

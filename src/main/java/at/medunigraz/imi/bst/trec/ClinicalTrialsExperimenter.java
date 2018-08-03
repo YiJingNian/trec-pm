@@ -19,7 +19,7 @@ public class ClinicalTrialsExperimenter {
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
 		// hpictboost
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withSubTemplate(improvedTemplate)
+		builder.newExperiment().withName("hpictboost").withYear(year).withGoldStandard(goldStandard).withTarget(target).withSubTemplate(improvedTemplate)
 				.withWordRemoval().withSolidTumor().withDiseasePreferredTerm().withDiseaseSynonym().withGeneSynonym().withGeneFamily();
 
 		Set<Experiment> experiments = builder.build();

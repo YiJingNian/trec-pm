@@ -1,0 +1,8 @@
+{
+  "term": {
+    "publicationTypes.keyword": {
+      "value": "Meta-Analysis",
+      "boost": 1
+    }
+  }
+}

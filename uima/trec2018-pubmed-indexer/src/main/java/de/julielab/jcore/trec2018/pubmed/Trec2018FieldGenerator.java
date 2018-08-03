@@ -89,14 +89,8 @@ public class Trec2018FieldGenerator extends FieldGenerator {
             for (int i = 0; i < ad.getDocumentClasses().size(); i++) {
                 DocumentClass documentClass = ad.getDocumentClasses(i);
                 arrayFieldValue.add(new RawToken(documentClass.getClassname()));
-                System.out.println("Found: " + documentClass.getClassname());
             }
             document.addField("documentClasses", arrayFieldValue);
-        } else {
-            if (any.isPresent())
-                System.out.println("AD found but getDocumentClasses is null");
-            else
-            System.out.println("No AD found");
         }
     }
 

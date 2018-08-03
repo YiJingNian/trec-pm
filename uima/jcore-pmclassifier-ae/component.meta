@@ -6,7 +6,7 @@
     "descriptors": [
         {
             "category": "ae",
-            "location": "de.julielab.jcore.ae.pmclassifer.desc.jcore-pmclassifier-ae"
+            "location": "de.julielab.jcore.ae.pmclassifier.desc.jcore-pmclassifier-ae"
         }
     ],
     "exposable": true,

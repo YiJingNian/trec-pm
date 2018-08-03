@@ -45,7 +45,24 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         addOrganisms(jCas, document);
         addDocumentClasses(jCas, document);
         addGsInfo(jCas, document);
+        addPublicationType(jCas, document);
         return document;
+    }
+
+    private void addPublicationType(JCas jCas, Document document) {
+        Header header = JCasUtil.selectSingle(jCas, Header.class);
+        FSArray pubTypeList = header.getPubTypeList();
+        ArrayFieldValue v = new ArrayFieldValue();
+        if (pubTypeList != null) {
+            for (int i = 0; i < pubTypeList.size(); ++i) {
+                PubType pt = (PubType) pubTypeList.get(i);
+                if (pt != null) {
+                    String publicationTypeName = pt.getName();
+                    v.add(new RawToken(publicationTypeName));
+                }
+            }
+        }
+        document.addField("publicationTypes", v);
     }
 
     private void addOrganisms(JCas jCas, Document document) {

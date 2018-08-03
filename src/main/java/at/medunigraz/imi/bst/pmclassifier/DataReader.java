@@ -1,5 +1,7 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
+import at.medunigraz.imi.bst.trec.model.Topic;
+import at.medunigraz.imi.bst.trec.model.TopicSet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.csv.CSVFormat;
@@ -21,6 +23,9 @@ import java.util.zip.ZipFile;
 
 public class DataReader {
     private static final Logger LOG = LogManager.getLogger();
+
+    private DataReader() {
+    }
 
     public static Map<String, Document> readDocuments(File documentJsonZip) throws DataReadingException {
         Map<String, Document> docsById;
@@ -54,6 +59,8 @@ public class DataReader {
                 String trecDocId = record.get("trec_doc_id");
                 int trecTopicNumber = Integer.parseInt(record.get("trec_topic_number"));
                 String pmRelDesc = record.get("pm_rel_desc");
+                if (pmRelDesc.equalsIgnoreCase("Human PM") || pmRelDesc.equalsIgnoreCase("Animal PM"))
+                    pmRelDesc = "PM";
                 int relevanceScore = Integer.parseInt(record.get("relevance_score"));
                 Document doc = docsById.get(trecDocId);
                 if (doc == null) {
@@ -62,8 +69,9 @@ public class DataReader {
                     //throw new IllegalStateException("Null document for doc ID " + trecDocId + ". Record: " + record);
                 }
                 // "Once PM, always PM"
-                if (doc.getPmLabel() == null || doc.getPmLabel().equalsIgnoreCase("Not PM"))
+                if (doc.getPmLabel() == null || doc.getPmLabel().equalsIgnoreCase("Not PM")) {
                     doc.setPMLabel(pmRelDesc);
+                }
             }
 
         } catch (IOException e1) {
@@ -72,9 +80,13 @@ public class DataReader {
     }
 
     public static List<String> getTextTerms(Document document) throws IOException {
-        StandardAnalyzer analyzer = new StandardAnalyzer();
         String documentText = document.getTitle() + " " + document.getAbstractText();
-        TokenStream ts = analyzer.tokenStream("text", documentText);
+        return getTextTerms(documentText);
+    }
+
+    public static List<String> getTextTerms(String text) throws IOException {
+        StandardAnalyzer analyzer = new StandardAnalyzer();
+        TokenStream ts = analyzer.tokenStream("text", text);
         ts.reset();
         CharTermAttribute termAtt = ts.getAttribute(CharTermAttribute.class);
         List<String> terms = new ArrayList<>();
@@ -84,8 +96,4 @@ public class DataReader {
         }
         return terms;
     }
-
-    private DataReader() {
-    }
-
 }

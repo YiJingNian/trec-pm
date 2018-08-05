@@ -2,7 +2,7 @@
   "bool": {
     "should": {
       "multi_match": {
-        "query": "gefitinib treatment survival prognostic clinical prognosis therapy outcome kinase resistance Gleason targets",
+        "query": "gefitinib treatment survival prognostic clinical prognosis therapy outcome resistance Gleason targets",
         "fields": [
           "title^2",
           "abstract"

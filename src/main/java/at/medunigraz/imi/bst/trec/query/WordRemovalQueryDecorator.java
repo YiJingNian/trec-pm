@@ -20,10 +20,10 @@ public class WordRemovalQueryDecorator extends QueryDecorator {
 		DOMAIN_STOPWORDS.add("tumour");
 		DOMAIN_STOPWORDS.add("primary");
 		DOMAIN_STOPWORDS.add("amplification");
-        DOMAIN_STOPWORDS.add("of");
-        DOMAIN_STOPWORDS.add("the");
-        DOMAIN_STOPWORDS.add("malignant");
-        DOMAIN_STOPWORDS.add("neoplasm");
+        	DOMAIN_STOPWORDS.add("of");
+        	DOMAIN_STOPWORDS.add("the");
+        	DOMAIN_STOPWORDS.add("malignant");
+        	DOMAIN_STOPWORDS.add("neoplasm");
 		DOMAIN_STOPWORDS.add("cell");
 		DOMAIN_STOPWORDS.add("nerve");
 		DOMAIN_STOPWORDS.add("with");
@@ -31,8 +31,6 @@ public class WordRemovalQueryDecorator extends QueryDecorator {
 		DOMAIN_STOPWORDS.add("for");
 		DOMAIN_STOPWORDS.add("rearrangement");
 		DOMAIN_STOPWORDS.add("function");
-		DOMAIN_STOPWORDS.add("adenocarcinoma");	// TODO check impact
-		//DOMAIN_STOPWORDS.add("sarcoma");		// TODO check impact
 	};
 
 	private static final String TOKEN_SEPARATOR = " ";

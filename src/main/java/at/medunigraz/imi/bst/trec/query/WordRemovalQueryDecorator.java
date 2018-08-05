@@ -26,6 +26,11 @@ public class WordRemovalQueryDecorator extends QueryDecorator {
         DOMAIN_STOPWORDS.add("neoplasm");
 		DOMAIN_STOPWORDS.add("cell");
 		DOMAIN_STOPWORDS.add("nerve");
+		DOMAIN_STOPWORDS.add("with");
+		DOMAIN_STOPWORDS.add("cells");
+		DOMAIN_STOPWORDS.add("for");
+		DOMAIN_STOPWORDS.add("rearrangement");
+		DOMAIN_STOPWORDS.add("function");
 		DOMAIN_STOPWORDS.add("adenocarcinoma");	// TODO check impact
 		//DOMAIN_STOPWORDS.add("sarcoma");		// TODO check impact
 	};

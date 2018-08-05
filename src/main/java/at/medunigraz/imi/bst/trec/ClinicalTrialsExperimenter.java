@@ -12,9 +12,9 @@ public class ClinicalTrialsExperimenter {
 				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/hpictboost.json").getFile());
 
 		// XXX Change this to Experiment.GoldStandard.INTERNAL for submission
-		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.OFFICIAL;
+		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.INTERNAL;
 		final Experiment.Task target = Experiment.Task.CLINICAL_TRIALS;
-		final int year = 2017;
+		final int year = 2018;
 
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 

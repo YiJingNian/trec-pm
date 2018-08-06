@@ -123,6 +123,7 @@
                     <array>
                         <string>de.julielab.jcore.types.Gene</string>
                         <string>de.julielab.jcore.types.Organism</string>
+                        <string>de.julielab.jcore.types.AutoDescriptor</string>
                     </array>
                 </value>
             </nameValuePair>
@@ -147,7 +148,7 @@
             <nameValuePair>
                 <name>Table</name>
                 <value>
-                    <string>erik.gs2017</string>
+                    <string>erik.trec2017gsdocs</string>
                 </value>
             </nameValuePair>
         </configurationParameterSettings>

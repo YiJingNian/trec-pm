@@ -7,8 +7,10 @@ import de.julielab.jcore.consumer.es.FilterRegistry;
 import de.julielab.jcore.consumer.es.preanalyzed.Document;
 import de.julielab.jcore.consumer.es.preanalyzed.RawToken;
 import de.julielab.jcore.types.*;
+import de.julielab.jcore.types.pubmed.ManualDescriptor;
 import de.julielab.jcore.utility.JCoReTools;
 import org.apache.uima.cas.CASException;
+import org.apache.uima.cas.FeatureStructure;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
@@ -30,7 +32,26 @@ public class PmClassifierInputFieldGenerator extends FieldGenerator {
         addGenes(jCas, document);
         addOrganisms(jCas, document);
         addPublicationType(jCas, document);
+        addKeywords(jCas, document);
         return document;
+    }
+
+    private void addKeywords(JCas jCas, Document document) {
+        try {
+            ManualDescriptor md = JCasUtil.selectSingle(jCas, ManualDescriptor.class);
+            FSArray kwl = md.getKeywordList();
+            if (kwl != null) {
+                ArrayFieldValue value = new ArrayFieldValue();
+                for (int i = 0; i < kwl.size(); i++) {
+                    Keyword kw = (Keyword) kwl.get(i);
+                    if (kw != null)
+                    value.add(new RawToken(kw.getName()));
+                }
+                document.addField("keywords", value);
+            }
+        } catch (IllegalArgumentException e){
+            // Nothing, document doesn't have a manual descriptor
+        }
     }
 
     private void addMeshTags(JCas jCas, Document document) {

@@ -1,5 +1,6 @@
 package at.medunigraz.imi.bst.pmclassifier;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -14,7 +15,36 @@ public class Document {
     private List<String> organisms;
     private List<String> meshTags;
     private List<String> meshTagsMajor;
+    private List<String> keywords;
     private String pmLabel;
+    private List<String> meshMinor;
+    private List<String> publicationTypes;
+    @JsonIgnore
+    private double[] topicWeight;
+
+    public double[] getTopicWeight() {
+        return topicWeight;
+    }
+
+    public void setTopicWeight(double[] topicWeight) {
+        this.topicWeight = topicWeight;
+    }
+
+    public List<String> getPublicationTypes() {
+        return publicationTypes;
+    }
+
+    public void setPublicationTypes(List<String> publicationTypes) {
+        this.publicationTypes = publicationTypes;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
+    }
 
     public List<String> getMeshTags() {
         return meshTags;
@@ -39,8 +69,6 @@ public class Document {
     public void setMeshMinor(List<String> meshMinor) {
         this.meshMinor = meshMinor;
     }
-
-    private List<String> meshMinor;
 
     public String getId() {
         return id;

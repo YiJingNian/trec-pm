@@ -8,8 +8,10 @@ import at.medunigraz.imi.bst.trec.experiment.ExperimentsBuilder;
 
 public class PubmedExperimenter {
 	public static void main(String[] args) {
-		final File negativeBoostKeywordsTemplate = new File(
+		final File improvedTemplate = new File(
 				PubmedExperimenter.class.getResource("/templates/biomedical_articles/hpipubboost.json").getFile());
+		final File noClassifierTemplate = new File(
+				PubmedExperimenter.class.getResource("/templates/biomedical_articles/hpipubnone.json").getFile());
 
 		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.INTERNAL;
 		final Experiment.Task target = Experiment.Task.PUBMED;
@@ -20,12 +22,17 @@ public class PubmedExperimenter {
 
 		// Judging order: 3
 		builder.newExperiment().withName("hpipubboost").withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym()
+				.withSubTemplate(improvedTemplate).withWordRemoval().withGeneSynonym()
+                .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
+
+		// Judging order: 4
+		builder.newExperiment().withName("hpipubnone").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(noClassifierTemplate).withWordRemoval().withGeneSynonym()
                 .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
 
 		// Judging order: 5
 		builder.newExperiment().withName("hpipuball").withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withSolidTumor().withGeneSynonym()
+				.withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withGeneSynonym()
 				.withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym().withGeneFamily();
 
 		Set<Experiment> experiments = builder.build();

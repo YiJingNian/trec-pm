@@ -12,6 +12,8 @@ public class PubmedExperimenter {
 				PubmedExperimenter.class.getResource("/templates/biomedical_articles/hpipubboost.json").getFile());
 		final File noClassifierTemplate = new File(
 				PubmedExperimenter.class.getResource("/templates/biomedical_articles/hpipubnone.json").getFile());
+		final File extraBoostTemplate = new File(
+				PubmedExperimenter.class.getResource("/templates/biomedical_articles/hpipubclass.json").getFile());
 
 		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.INTERNAL;
 		final Experiment.Task target = Experiment.Task.PUBMED;
@@ -34,6 +36,11 @@ public class PubmedExperimenter {
 		builder.newExperiment().withName("hpipuball").withYear(year).withGoldStandard(goldStandard).withTarget(target)
 				.withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withGeneSynonym()
 				.withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym().withGeneFamily();
+
+		// Judging order: ?
+		builder.newExperiment().withName("hpipubclass").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(extraBoostTemplate).withWordRemoval().withGeneSynonym()
+				.withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
 
 		Set<Experiment> experiments = builder.build();
 

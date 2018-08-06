@@ -112,6 +112,11 @@ public class InstancePreparator implements Serializable {
         pipes.add(new TfIdfPipe());
         pipes.add(new HasGenesPipe());
         pipes.add(new MeshTagsForTokenPipe());
+        //pipes.add(new HasDiseasePipe());
+        //pipes.add(new HasKeywordPipe());
+        //pipes.add(new Doc2VecPipe());
+        //pipes.add(new HasPubTypePipe());
+        pipes.add(new TopicModelPipe());
         pipes.add(new Token2FeatureVector());
         return pipes;
     }

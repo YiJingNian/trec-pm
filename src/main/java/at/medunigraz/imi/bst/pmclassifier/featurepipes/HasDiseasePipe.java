@@ -26,7 +26,7 @@ public class HasDiseasePipe extends Pipe {
     @Override
     public Instance pipe(Instance inst) {
         Token token = (Token) inst.getData();
-        ac.match(token.getText(), (start,end,matched) -> token.setFeatureValue("hasDisease=", 1));
+        ac.match(token.getText(), (start,end,matched) -> token.setFeatureValue("hasDisease="+matched, 1));
         return inst;
     }
 }

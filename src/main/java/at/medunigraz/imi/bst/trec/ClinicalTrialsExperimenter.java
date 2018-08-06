@@ -10,6 +10,8 @@ public class ClinicalTrialsExperimenter {
 	public static void main(String[] args) {
 		final File improvedTemplate = new File(
 				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/hpictboost.json").getFile());
+		final File phraseTemplate = new File(
+				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/hpictphrase.json").getFile());
 
 		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.INTERNAL;
 		final Experiment.Task target = Experiment.Task.CLINICAL_TRIALS;
@@ -20,6 +22,11 @@ public class ClinicalTrialsExperimenter {
 		// Judging order: 3
 		builder.newExperiment().withName("hpictboost").withYear(year).withGoldStandard(goldStandard).withTarget(target)
 				.withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
+				.withDiseaseSynonym().withGeneSynonym().withGeneFamily();
+
+		// Judging order: 4
+		builder.newExperiment().withName("hpictphrase").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(phraseTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
 				.withDiseaseSynonym().withGeneSynonym().withGeneFamily();
 
 		// Judging order: 5

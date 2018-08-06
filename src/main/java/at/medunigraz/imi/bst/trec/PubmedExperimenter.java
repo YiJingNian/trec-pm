@@ -18,10 +18,15 @@ public class PubmedExperimenter {
 		
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
-		// hpipubboost
+		// Judging order: 3
 		builder.newExperiment().withName("hpipubboost").withYear(year).withGoldStandard(goldStandard).withTarget(target)
 				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym()
                 .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
+
+		// Judging order: 5
+		builder.newExperiment().withName("hpipuball").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withSolidTumor().withGeneSynonym()
+				.withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym().withGeneFamily();
 
 		Set<Experiment> experiments = builder.build();
 

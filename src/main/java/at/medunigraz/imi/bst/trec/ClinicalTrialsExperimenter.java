@@ -11,16 +11,21 @@ public class ClinicalTrialsExperimenter {
 		final File improvedTemplate = new File(
 				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/hpictboost.json").getFile());
 
-		// XXX Change this to Experiment.GoldStandard.INTERNAL for submission
 		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.INTERNAL;
 		final Experiment.Task target = Experiment.Task.CLINICAL_TRIALS;
 		final int year = 2018;
 
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
-		// hpictboost
-		builder.newExperiment().withName("hpictboost").withYear(year).withGoldStandard(goldStandard).withTarget(target).withSubTemplate(improvedTemplate)
-				.withWordRemoval().withSolidTumor().withDiseasePreferredTerm().withDiseaseSynonym().withGeneSynonym().withGeneFamily();
+		// Judging order: 3
+		builder.newExperiment().withName("hpictboost").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
+				.withDiseaseSynonym().withGeneSynonym().withGeneFamily();
+
+		// Judging order: 5
+		builder.newExperiment().withName("hpictall").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+                .withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
+                .withDiseaseSynonym().withGeneSynonym().withGeneDescription().withGeneFamily();
 
 		Set<Experiment> experiments = builder.build();
 

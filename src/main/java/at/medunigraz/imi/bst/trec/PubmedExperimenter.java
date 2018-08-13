@@ -19,28 +19,33 @@ public class PubmedExperimenter {
 		final Experiment.Task target = Experiment.Task.PUBMED;
 		final int year = 2018;
 
-		
+
 		ExperimentsBuilder builder = new ExperimentsBuilder();
+
+
+		// Judging order: 1
+		builder.newExperiment().withName("hpipubclass").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(extraBoostTemplate).withWordRemoval().withGeneSynonym()
+				.withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
+
+		// Judging order: 2
+		builder.newExperiment().withName("hpipubnone").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(noClassifierTemplate).withWordRemoval().withGeneSynonym()
+                .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
 
 		// Judging order: 3
 		builder.newExperiment().withName("hpipubboost").withYear(year).withGoldStandard(goldStandard).withTarget(target)
 				.withSubTemplate(improvedTemplate).withWordRemoval().withGeneSynonym()
                 .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
 
-		// Judging order: 4
-		builder.newExperiment().withName("hpipubnone").withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(noClassifierTemplate).withWordRemoval().withGeneSynonym()
-                .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
+		// Judging order: 4 -- must deactivate pm-classifier in the template
+		builder.newExperiment().withName("hpipubcommon").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym()
+				.withDiseasePreferredTerm().withDiseaseSynonym();
 
-		// Judging order: 5
-		builder.newExperiment().withName("hpipuball").withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withGeneSynonym()
-				.withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym().withGeneFamily();
-
-		// Judging order: ?
-		builder.newExperiment().withName("hpipubclass").withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(extraBoostTemplate).withWordRemoval().withGeneSynonym()
-				.withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
+		// Judging order: 5 -- must deactivate pm-classifier in the template
+	  builder.newExperiment().withName("hpipubbase").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(negativeBoostKeywordsTemplate);
 
 		Set<Experiment> experiments = builder.build();
 

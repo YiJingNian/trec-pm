@@ -38,14 +38,14 @@ public class PubmedExperimenter {
 				.withSubTemplate(improvedTemplate).withWordRemoval().withGeneSynonym()
                 .withDiseasePreferredTerm().withGeneDescription().withDiseaseSynonym();
 
-		// Judging order: 4 -- must deactivate pm-classifier in the template
+		// Judging order: 4
 		builder.newExperiment().withName("hpipubcommon").withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(negativeBoostKeywordsTemplate).withWordRemoval().withGeneSynonym()
+				.withSubTemplate(noClassifierTemplate).withWordRemoval().withGeneSynonym()
 				.withDiseasePreferredTerm().withDiseaseSynonym();
 
-		// Judging order: 5 -- must deactivate pm-classifier in the template
-	  builder.newExperiment().withName("hpipubbase").withYear(year).withGoldStandard(goldStandard).withTarget(target)
-				.withSubTemplate(negativeBoostKeywordsTemplate);
+		// Judging order: 5
+		builder.newExperiment().withName("hpipubbase").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(noClassifierTemplate);
 
 		Set<Experiment> experiments = builder.build();
 

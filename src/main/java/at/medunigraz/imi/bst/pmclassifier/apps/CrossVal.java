@@ -34,7 +34,7 @@ public class CrossVal {
         int numFolds = 10;
 
         Map<String, Document> documents = DataReader.readDocuments(new File("resources/gs2017DocsJson.zip"));
-        inferTopics(documents.values());
+        //inferTopics(documents.values());
         InstancePreparator ip = InstancePreparator.getInstance();
         classifier.setInstancePreparator(ip);
 

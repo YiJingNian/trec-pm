@@ -34,8 +34,8 @@ public class ClinicalTrialsExperimenter {
 				.withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
 				.withDiseaseSynonym().withGeneSynonym().withGeneFamily();
 
-	  // Judging order: 4
-	  builder.newExperiment().withName("hpictcommon").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+	  	// Judging order: 4
+	  	builder.newExperiment().withName("hpictcommon").withYear(year).withGoldStandard(goldStandard).withTarget(target)
 				.withSubTemplate(improvedTemplate).withWordRemoval().withDiseasePreferredTerm().withDiseaseSynonym()
 				.withGeneSynonym();
 

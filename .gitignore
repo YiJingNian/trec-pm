@@ -38,6 +38,7 @@ target
 # Output folders
 stats
 results
+models
 
 # Big resource files
 src/main/resources/genes/*.gene_info*

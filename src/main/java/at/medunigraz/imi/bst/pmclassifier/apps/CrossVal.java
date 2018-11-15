@@ -34,6 +34,7 @@ public class CrossVal {
         int numFolds = 10;
 
         Map<String, Document> documents = DataReader.readDocuments(new File("resources/gs2017DocsJson.zip"));
+        LOG.info("Got {} documents for training", documents.size());
         //inferTopics(documents.values());
         InstancePreparator ip = InstancePreparator.getInstance();
         classifier.setInstancePreparator(ip);
@@ -41,6 +42,11 @@ public class CrossVal {
         ip.trainTfIdf(documents.values());
 
         DataReader.addPMLabels(new File("resources/20180622processedGoldStandardTopics.tsv.gz"), documents);
+        if (LOG.isInfoEnabled()) {
+            long pm = documents.values().stream().filter(d -> d.getPmLabel().equalsIgnoreCase("PM")).count();
+            long notpm = documents.values().stream().filter(d -> d.getPmLabel().equalsIgnoreCase("Not PM")).count();
+            LOG.info("Got {} PM and {} Not PM documents.", pm, notpm);
+        }
         List<Document> pmList = documents.values().stream().filter(d -> !d.getPmLabel().equalsIgnoreCase("Not PM")).
                 sorted(Comparator.comparing(Document::getId)).
                 collect(toList());

@@ -57,16 +57,13 @@ public class DataReader {
             while (it.hasNext()) {
                 CSVRecord record = it.next();
                 String trecDocId = record.get("trec_doc_id");
-                int trecTopicNumber = Integer.parseInt(record.get("trec_topic_number"));
                 String pmRelDesc = record.get("pm_rel_desc");
                 if (pmRelDesc.equalsIgnoreCase("Human PM") || pmRelDesc.equalsIgnoreCase("Animal PM"))
                     pmRelDesc = "PM";
-                int relevanceScore = Integer.parseInt(record.get("relevance_score"));
                 Document doc = docsById.get(trecDocId);
                 if (doc == null) {
                     LOG.warn("Null document for doc ID " + trecDocId + ". Record: " + record);
                     continue;
-                    //throw new IllegalStateException("Null document for doc ID " + trecDocId + ". Record: " + record);
                 }
                 // "Once PM, always PM"
                 if (doc.getPmLabel() == null || doc.getPmLabel().equalsIgnoreCase("Not PM")) {

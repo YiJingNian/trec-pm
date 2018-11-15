@@ -5,56 +5,43 @@ import java.util.Set;
 
 import at.medunigraz.imi.bst.trec.experiment.Experiment;
 import at.medunigraz.imi.bst.trec.experiment.ExperimentsBuilder;
-import at.medunigraz.imi.bst.trec.model.Gene;
 
 public class ClinicalTrialsExperimenter {
 	public static void main(String[] args) {
-		final File baselineTemplate = new File(
-				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/baseline-ct.json").getFile());
-		final File mustNotOtherTemplate = new File(
-				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/must-not-other.json").getFile());
-		final File mustMatchTemplate = new File(
-				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/must-match-ct.json").getFile());
-		final File cancerSynonymsTemplate = new File(
-				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/cancer-synonyms-ct.json").getFile());
-		final File boostTemplate = new File(
-				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/boost-ct.json").getFile());
 		final File improvedTemplate = new File(
-				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/improved-ct.json").getFile());
+				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/hpictboost.json").getFile());
+		final File phraseTemplate = new File(
+				ClinicalTrialsExperimenter.class.getResource("/templates/clinical_trials/hpictphrase.json").getFile());
 
-		final Gene.Field[] expandTo = { Gene.Field.SYMBOL, Gene.Field.SYNONYMS };
-
-		// XXX Change this to Experiment.GoldStandard.INTERNAL for submission
-		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.OFFICIAL;
+		final Experiment.GoldStandard goldStandard = Experiment.GoldStandard.INTERNAL;
 		final Experiment.Task target = Experiment.Task.CLINICAL_TRIALS;
-		final int year = 2017;
+		final int year = 2018;
 
 		ExperimentsBuilder builder = new ExperimentsBuilder();
 
-		// mugctbase
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(baselineTemplate);
+		// Judging order: 1
+		builder.newExperiment().withName("hpictall").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+                .withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
+                .withDiseaseSynonym().withGeneSynonym().withGeneDescription().withGeneFamily();
 
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(mustMatchTemplate);
+		// Judging order: 2
+		builder.newExperiment().withName("hpictphrase").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(phraseTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
+				.withDiseaseSynonym().withGeneSynonym().withGeneFamily();
 
-		// mugctmust
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(mustNotOtherTemplate);
+		// Judging order: 3
+		builder.newExperiment().withName("hpictboost").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(improvedTemplate).withWordRemoval().withSolidTumor().withDiseasePreferredTerm()
+				.withDiseaseSynonym().withGeneSynonym().withGeneFamily();
 
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(cancerSynonymsTemplate)
-				.withWordRemoval();
+	  	// Judging order: 4
+	  	builder.newExperiment().withName("hpictcommon").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(improvedTemplate).withWordRemoval().withDiseasePreferredTerm().withDiseaseSynonym()
+				.withGeneSynonym();
 
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(boostTemplate);
-
-		// mugctboost
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(improvedTemplate)
-				.withWordRemoval();
-
-		// mugctdisease
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(improvedTemplate)
-				.withWordRemoval().withDiseaseExpander();
-
-		// mugctgene
-		builder.newExperiment().withYear(year).withGoldStandard(goldStandard).withTarget(target).withTemplate(improvedTemplate)
-				.withGeneExpansion(expandTo).withWordRemoval();
+		// Judging order: 5
+		builder.newExperiment().withName("hpictbase").withYear(year).withGoldStandard(goldStandard).withTarget(target)
+				.withSubTemplate(improvedTemplate);
 
 		Set<Experiment> experiments = builder.build();
 

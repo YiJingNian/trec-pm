@@ -149,6 +149,10 @@ public class Experiment extends Thread {
 			return "qrels-treceval-abstracts.2017.txt";
 		} else if (goldStandard == GoldStandard.OFFICIAL && task == Task.CLINICAL_TRIALS && year == YEAR_PUBLISHED_GS) {
 			return "qrels-treceval-clinical_trials.2017.txt";
+		} else if (goldStandard == GoldStandard.INTERNAL && task == Task.PUBMED && year == 2018) {
+			return "gsheets-abstracts-2018.qrels";
+		} else if (goldStandard == GoldStandard.INTERNAL && task == Task.CLINICAL_TRIALS && year == 2018) {
+			return "gsheets-trials-2018.qrels";
 		} else {
 			throw new UnsupportedOperationException("Invalid combination of gold standard, task and year.");
 		}

@@ -4,8 +4,8 @@ prognostic
 prognosis
 recurrence-free survival
 recurrence-free
-chemoterapy
-chemoterapeutical
+chemotherapy
+chemotherapeutic
 prognosis
 disease-free survival
 disease-free
@@ -46,7 +46,7 @@ model
 in vivo
 existing drugs
 drugs
-agressive
+aggressive
 risk stratification
 chemoradiotherapy
 radiotherapy
@@ -56,7 +56,7 @@ efficiency
 sensitive
 trial
 phase I
-phasse II
+phase II
 clinical trial
 clinical
 placebo-controlled

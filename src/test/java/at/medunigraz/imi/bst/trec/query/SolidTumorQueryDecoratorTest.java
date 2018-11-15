@@ -1,9 +1,12 @@
 package at.medunigraz.imi.bst.trec.query;
 
 import at.medunigraz.imi.bst.config.TrecConfig;
+import at.medunigraz.imi.bst.lexigram.Lexigram;
 import at.medunigraz.imi.bst.trec.model.Topic;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;

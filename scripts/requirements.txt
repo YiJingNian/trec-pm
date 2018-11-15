@@ -1,0 +1,7 @@
+pandas
+nltk
+sklearn
+
+# See instalation instructions at https://automl.github.io/auto-sklearn/stable/installation.html
+# The pickle file loads autosklearn.pipeline.implementations.Normalizer, which was removed in auto-sklearn 0.4.0
+#auto-sklearn==0.3.0

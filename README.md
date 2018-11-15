@@ -16,6 +16,7 @@ Also of interest:
 * [Our TREC 2017 Poster](https://github.com/bst-mug/trec2017/blob/master/docs/poster.pdf)
 * [Our TREC 2018 presentation slides](https://github.com/hpi-dhc/trec-pm/blob/master/docs/2018/presentation.pdf)
 * [Our TREC 2018 Poster](https://github.com/hpi-dhc/trec-pm/blob/master/docs/2018/poster.pdf)
+* [Our TREC 2018 Data Artifacts](https://figshare.com/projects/TREC_PM_2018_Data_dhc-hpi_/56882)
 
 ## Code Dependencies
 

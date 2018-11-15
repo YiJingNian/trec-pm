@@ -26,7 +26,7 @@ Also of interest:
 - perl (for `sample_eval` tool)
 - Elasticsearch 5.4.0+
 
-# Some Examples on How to Run Experiments
+## Some Examples on How to Run Experiments
 
 ```
 # All executions should be run where the pom file is, usually the root of the project

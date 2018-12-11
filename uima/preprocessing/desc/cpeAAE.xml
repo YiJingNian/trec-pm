@@ -4,10 +4,10 @@
     <primitive>false</primitive>
     <delegateAnalysisEngineSpecifiers>
         <delegateAnalysisEngine key="JCoRe Pipeline AAE">
-            <import name="Analysis Engines" location="aggregateAnalysisEngine.xml"/>
+            <import location="AggregateAnalysisEngine.xml"/>
         </delegateAnalysisEngine>
         <delegateAnalysisEngine key="JCoRe XMI Database Writer">
-            <import name="CAS Consumers" location="JCoRe XMI Database Writer.xml"/>
+            <import location="JCoRe XMI Database Writer.xml"/>
         </delegateAnalysisEngine>
     </delegateAnalysisEngineSpecifiers>
     <analysisEngineMetaData>
@@ -20,6 +20,24 @@
                 <node>JCoRe XMI Database Writer</node>
             </fixedFlow>
         </flowConstraints>
+        <typeSystemDescription>
+            <imports>
+                <import name="de.julielab.jcore.types.jcore-morpho-syntax-types"/>
+                <import name="de.julielab.jcore.types.jcore-morpho-syntax-types"/>
+                <import name="de.julielab.jcore.types.jcore-morpho-syntax-types"/>
+                <import name="de.julielab.jcore.types.jcore-morpho-syntax-types"/>
+                <import name="de.julielab.jcore.types.jcore-semantics-biology-types"/>
+                <import name="de.julielab.jcore.types.jcore-document-structure-types"/>
+                <import name="de.julielab.jcore.types.jcore-morpho-syntax-types"/>
+                <import name="de.julielab.jcore.types.jcore-semantics-biology-types"/>
+                <import name="de.julielab.jcore.types.jcore-semantics-biology-types"/>
+                <import name="de.julielab.jcore.types.jcore-document-meta-pubmed-types"/>
+                <import name="de.julielab.jcore.types.jcore-document-structure-pubmed-types"/>
+                <import name="de.julielab.jcore.types.jcore-xmi-splitter-types"/>
+                <import name="de.julielab.jcore.types.extensions.jcore-document-meta-extension-types"/>
+                <import name="org.apache.uima.ducc.FlowControllerTS"/>
+            </imports>
+        </typeSystemDescription>
         <capabilities/>
         <operationalProperties>
             <modifiesCas>true</modifiesCas>

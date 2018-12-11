@@ -125,7 +125,7 @@
                     <array>
                         <string>de.julielab.jcore.types.AbstractText</string>
                         <string>de.julielab.jcore.types.Title</string>
-			<string>de.julielab.jcore.types.Header</string>
+                        <string>de.julielab.jcore.types.Header</string>
                         <string>de.julielab.jcore.types.pubmed.Header</string>
                         <string>de.julielab.jcore.types.pubmed.ManualDescriptor</string>
                     </array>
@@ -175,10 +175,42 @@
             </nameValuePair>
         </configurationParameterSettings>
         <typeSystemDescription>
-            <imports>
-                <import name="de.julielab.jcore.types.jcore-xmi-splitter-types"/>
-                <import name="de.julielab.jcore.types.extensions.jcore-document-meta-extension-types"/>
-            </imports>
+            <types>
+                <typeDescription>
+                    <name>de.julielab.jcore.types.XmiMetaData</name>
+                    <description>This type stores required information for the appropiate handling of consistent XMI deserialization in the XMI reader and serialization in the XMI consumer with respect to the separate storage of annotations.</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                    <features>
+                        <featureDescription>
+                            <name>maxXmiId</name>
+                            <description/>
+                            <rangeTypeName>uima.cas.Integer</rangeTypeName>
+                        </featureDescription>
+                        <featureDescription>
+                            <name>sofaIdMappings</name>
+                            <description>Mappings from sofa xmi:id to the sofa name, i.e. the sofaID attribute in XMI format. A mapping has the form xmiId=sofaID.</description>
+                            <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+                        </featureDescription>
+                    </features>
+                </typeDescription>
+                <typeDescription>
+                    <name>de.julielab.jcore.types.ext.DBProcessingMetaData</name>
+                    <description>This type stores required information for the appropiate handling of consistent XMI deserialization in the XMI reader and serialization in the XMI consumer with respect to the separate storage of annotations.</description>
+                    <supertypeName>uima.tcas.Annotation</supertypeName>
+                    <features>
+                        <featureDescription>
+                            <name>primaryKey</name>
+                            <description>The primary key of an artefact, possibly consisting of multiple components.</description>
+                            <rangeTypeName>uima.cas.StringArray</rangeTypeName>
+                        </featureDescription>
+                        <featureDescription>
+                            <name>subsetTable</name>
+                            <description>The subset table that is used to specify the set of documents to processes and to store processing status information. May be empty in the case the documents are directly read from a data table.</description>
+                            <rangeTypeName>uima.cas.String</rangeTypeName>
+                        </featureDescription>
+                    </features>
+                </typeDescription>
+            </types>
         </typeSystemDescription>
         <fsIndexCollection/>
         <capabilities/>

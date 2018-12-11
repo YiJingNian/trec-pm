@@ -9,7 +9,7 @@ task('install-framework', type: Exec) {
 	inputs.file '../pom.xml'
 	outputs.dir '../target'
 	executable 'bash'
-	args '-c', 'mvn clean install -f ../pom.xml'
+	args '-c', 'mvn clean install -f ../pom.xml -DskipTests=true'
 }
 
 task('install-uima-components', type: Exec) {

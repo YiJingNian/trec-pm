@@ -3,7 +3,7 @@
 <runners>
 <runner>
 <name>CPERunner</name>
-<pipelinepath>/home/faessler/Coding/git/trec2018/uima/extra-to-xmi-db-pipeline</pipelinepath>
+<pipelinepath>/home/faessler/Coding/git/ourtrecpm/uima/extra-to-xmi-db-pipeline</pipelinepath>
 <numthreads>2</numthreads>
 </runner>
 </runners>

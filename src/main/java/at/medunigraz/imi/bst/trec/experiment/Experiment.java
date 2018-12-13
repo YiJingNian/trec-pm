@@ -34,7 +34,7 @@ public class Experiment extends Thread {
 	public Metrics allMetrics = null;
 	
 	public static enum Task {
-		CLINICAL_TRIALS, PUBMED
+		CLINICAL_TRIALS, PUBMED, PUBMED_ONLINE
 	}
 	
 	public static enum GoldStandard {
@@ -145,11 +145,11 @@ public class Experiment extends Thread {
 		// So far, we have only an internal gold standard for the 2017 edition on Scientific Abstracts
 		if (goldStandard == GoldStandard.INTERNAL && task == Task.PUBMED && year == YEAR_PUBLISHED_GS) {
 			return "topics2017-pmid.qrels";
-		} else if (goldStandard == GoldStandard.OFFICIAL && task == Task.PUBMED && year == YEAR_PUBLISHED_GS) {
+		} else if (goldStandard == GoldStandard.OFFICIAL && (task == Task.PUBMED || task == Task.PUBMED_ONLINE) && year == YEAR_PUBLISHED_GS) {
 			return "qrels-treceval-abstracts.2017.txt";
 		} else if (goldStandard == GoldStandard.OFFICIAL && task == Task.CLINICAL_TRIALS && year == YEAR_PUBLISHED_GS) {
 			return "qrels-treceval-clinical_trials.2017.txt";
-		} else if (goldStandard == GoldStandard.INTERNAL && task == Task.PUBMED && year == 2018) {
+		} else if (goldStandard == GoldStandard.INTERNAL && (task == Task.PUBMED || task == Task.PUBMED_ONLINE) && year == 2018) {
 			return "gsheets-abstracts-2018.qrels";
 		} else if (goldStandard == GoldStandard.INTERNAL && task == Task.CLINICAL_TRIALS && year == 2018) {
 			return "gsheets-trials-2018.qrels";

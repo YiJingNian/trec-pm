@@ -11,75 +11,75 @@ import at.medunigraz.imi.bst.trec.query.*;
 
 public class ExperimentsBuilder {
 
-	private Set<Experiment> experiments = new HashSet<>();
+    private Set<Experiment> experiments = new HashSet<>();
 
-	private Experiment buildingExp = null;
+    private Experiment buildingExp = null;
 
-	public ExperimentsBuilder() {
-	}
+    public ExperimentsBuilder() {
+    }
 
-	public ExperimentsBuilder newExperiment() {
-		validate();
-		buildingExp = new Experiment();
-		return this;
-	}
+    public ExperimentsBuilder newExperiment() {
+        validate();
+        buildingExp = new Experiment();
+        return this;
+    }
 
-	public ExperimentsBuilder withName(String name) {
-		buildingExp.setExperimentName(name);
-		return this;
-	}
+    public ExperimentsBuilder withName(String name) {
+        buildingExp.setExperimentName(name);
+        return this;
+    }
 
-	@Deprecated
-	public ExperimentsBuilder withDecorator(Query decorator) {
-		buildingExp.setDecorator(decorator);
-		return this;
-	}
+    @Deprecated
+    public ExperimentsBuilder withDecorator(Query decorator) {
+        buildingExp.setDecorator(decorator);
+        return this;
+    }
 
-	public ExperimentsBuilder withTemplate(File template) {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new TemplateQueryDecorator(template, previousDecorator));
-		return this;
-	}
+    public ExperimentsBuilder withTemplate(File template) {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new TemplateQueryDecorator(template, previousDecorator));
+        return this;
+    }
 
-	public ExperimentsBuilder withSubTemplate(File template) {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new SubTemplateQueryDecorator(template, previousDecorator));
-		return this;
-	}
-	
-	public ExperimentsBuilder withKeyword(String value) {
-		Query previousDecorator = buildingExp.getDecorator();
-		
-		Map<String, String> keymap = new HashMap<>();
-		keymap.put("keyword", value);		
-		buildingExp.setDecorator(new StaticMapQueryDecorator(keymap, previousDecorator));
-		
-		return this;
-	}
+    public ExperimentsBuilder withSubTemplate(File template) {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new SubTemplateQueryDecorator(template, previousDecorator));
+        return this;
+    }
 
-	public ExperimentsBuilder withWordRemoval() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new WordRemovalQueryDecorator(previousDecorator));
-		return this;
-	}
+    public ExperimentsBuilder withKeyword(String value) {
+        Query previousDecorator = buildingExp.getDecorator();
 
-	public ExperimentsBuilder withGeneExpansion(Gene.Field[] expandTo) {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new GeneExpanderQueryDecorator(expandTo, previousDecorator));
-		return this;
-	}
-	
-	public ExperimentsBuilder withDiseaseReplacer() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new DiseaseReplacerQueryDecorator(previousDecorator));
-		return this;
-	}
-	
-	public ExperimentsBuilder withDiseaseExpander() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new DiseaseExpanderQueryDecorator(previousDecorator));
-		return this;
-	}
+        Map<String, String> keymap = new HashMap<>();
+        keymap.put("keyword", value);
+        buildingExp.setDecorator(new StaticMapQueryDecorator(keymap, previousDecorator));
+
+        return this;
+    }
+
+    public ExperimentsBuilder withWordRemoval() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new WordRemovalQueryDecorator(previousDecorator));
+        return this;
+    }
+
+    public ExperimentsBuilder withGeneExpansion(Gene.Field[] expandTo) {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new GeneExpanderQueryDecorator(expandTo, previousDecorator));
+        return this;
+    }
+
+    public ExperimentsBuilder withDiseaseReplacer() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new DiseaseReplacerQueryDecorator(previousDecorator));
+        return this;
+    }
+
+    public ExperimentsBuilder withDiseaseExpander() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new DiseaseExpanderQueryDecorator(previousDecorator));
+        return this;
+    }
 
     public ExperimentsBuilder withDiseasePreferredTerm() {
         Query previousDecorator = buildingExp.getDecorator();
@@ -87,17 +87,17 @@ public class ExperimentsBuilder {
         return this;
     }
 
-	public ExperimentsBuilder withDiseaseSynonym() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new DiseaseSynonymQueryDecorator(previousDecorator));
-		return this;
-	}
+    public ExperimentsBuilder withDiseaseSynonym() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new DiseaseSynonymQueryDecorator(previousDecorator));
+        return this;
+    }
 
-	public ExperimentsBuilder withGeneSynonym() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new GeneSynonymQueryDecorator(previousDecorator));
-		return this;
-	}
+    public ExperimentsBuilder withGeneSynonym() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new GeneSynonymQueryDecorator(previousDecorator));
+        return this;
+    }
 
     public ExperimentsBuilder withGeneDescription() {
         Query previousDecorator = buildingExp.getDecorator();
@@ -105,50 +105,53 @@ public class ExperimentsBuilder {
         return this;
     }
 
-	public ExperimentsBuilder withDiseaseHypernym() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new DiseaseHypernymQueryDecorator(previousDecorator));
-		return this;
-	}
+    public ExperimentsBuilder withDiseaseHypernym() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new DiseaseHypernymQueryDecorator(previousDecorator));
+        return this;
+    }
 
-	public ExperimentsBuilder withSolidTumor() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new SolidTumorQueryDecorator(previousDecorator));
-		return this;
-	}
+    public ExperimentsBuilder withSolidTumor() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new SolidTumorQueryDecorator(previousDecorator));
+        return this;
+    }
 
-	public ExperimentsBuilder withGeneFamily() {
-		Query previousDecorator = buildingExp.getDecorator();
-		buildingExp.setDecorator(new GeneFamilyQueryDecorator(previousDecorator));
-		return this;
-	}
+    public ExperimentsBuilder withGeneFamily() {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new GeneFamilyQueryDecorator(previousDecorator));
+        return this;
+    }
 
-	public ExperimentsBuilder withGoldStandard(Experiment.GoldStandard gold) {
-		buildingExp.setGoldStandard(gold);
-		return this;
-	}
+    public ExperimentsBuilder withGoldStandard(Experiment.GoldStandard gold) {
+        buildingExp.setGoldStandard(gold);
+        return this;
+    }
 
-	public ExperimentsBuilder withTarget(Experiment.Task task) {
-		buildingExp.setTask(task);
-		buildingExp.setDecorator(new ElasticSearchQuery(buildingExp.getIndexName(), buildingExp.getTypes()));
-		return this;
-	}
+    public ExperimentsBuilder withTarget(Experiment.Task task) {
+        buildingExp.setTask(task);
+        if (task != Experiment.Task.PUBMED_ONLINE)
+            buildingExp.setDecorator(new ElasticSearchQuery(buildingExp.getIndexName(), buildingExp.getTypes()));
+        else
+            buildingExp.setDecorator(new PubMedOnlineQuery());
+        return this;
+    }
 
-	public ExperimentsBuilder withYear(int year) {
-		buildingExp.setYear(year);
-		return this;
-	}
+    public ExperimentsBuilder withYear(int year) {
+        buildingExp.setYear(year);
+        return this;
+    }
 
-	public Set<Experiment> build() {
-		validate();
-		return experiments;
-	}
+    public Set<Experiment> build() {
+        validate();
+        return experiments;
+    }
 
-	private void validate() {
-		if (buildingExp != null) {
-			this.experiments.add(buildingExp);
-			return;
-		}
+    private void validate() {
+        if (buildingExp != null) {
+            this.experiments.add(buildingExp);
+            return;
+        }
 
-	}
+    }
 }

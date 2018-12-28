@@ -12,8 +12,10 @@
     </DBSchemaInformation>
     <DBConnectionInformation>
         <activeDBConnection>trecpm</activeDBConnection>
-        <DBConnections>
+	<maxActiveDBConnections>3</maxActiveDBConnections>
+	<DBConnections>
             <DBConnection name="trecpm" url="jdbc:postgresql://h4:5432/trecpm"/>
         </DBConnections>
     </DBConnectionInformation>
+	
 </databaseConnectorConfiguration>

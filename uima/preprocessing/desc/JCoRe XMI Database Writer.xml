@@ -124,6 +124,7 @@
                         <string>de.julielab.jcore.types.Gene</string>
                         <string>de.julielab.jcore.types.EventMention</string>
                         <string>de.julielab.jcore.types.LikelihoodIndicator</string>
+                        <string>de.julielab.jcore.types.AutoDescriptor</string>
                     </array>
                 </value>
             </nameValuePair>

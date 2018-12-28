@@ -2,6 +2,7 @@ package at.medunigraz.imi.bst.pmclassifier;
 
 import cc.mallet.classify.Classification;
 import cc.mallet.classify.Classifier;
+import cc.mallet.classify.MaxEnt;
 import cc.mallet.classify.MaxEntTrainer;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
@@ -79,6 +80,7 @@ public class MalletClassifier implements Serializable{
     public void readClassifier(InputStream is) throws IOException, ClassNotFoundException {
         try (ObjectInputStream ois = new ObjectInputStream(is)) {
             classifier = (Classifier) ois.readObject();
+            classifier.getInstancePipe().getDataAlphabet().stopGrowth();
             instancePreparator = (InstancePreparator) ois.readObject();
             instancePreparator.setAsInstance();
         }

@@ -30,11 +30,10 @@ public class Trec2018FieldGenerator extends FieldGenerator {
 
     @Override
     public Document addFields(JCas jCas, Document document) throws CASException, FieldGenerationException {
-        addPmid(jCas, document);
+        addDocId(jCas, document);
         addTitle(jCas, document);
-        addFullAbstract(jCas, document);
+        addAbstract(jCas, document);
         addAbstractSections(jCas, document);
-        addLastAbstractSectionOrFullAbstract(jCas, document);
         addPublicationDate(jCas, document);
         addMeshTags(jCas, document);
         addDocumentSource(jCas, document);
@@ -107,6 +106,8 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         List<CSVRecord> records = gsRecords.get(docId);
         if (records != null) {
             for (CSVRecord record : records) {
+                // Here we add all the GS information about the document. Note that this often includes multiple
+                // records because documents are repeated across topics
                 Map<String, Integer> gsHeaderMap = filterBoard.gsHeaderMap;
                 for (String header : gsHeaderMap.keySet()) {
                     if (unwantedGsFields.contains(header) || StringUtils.isBlank(header))
@@ -124,31 +125,21 @@ public class Trec2018FieldGenerator extends FieldGenerator {
                         }
                     }
                 }
+
+                // Here we add the GS information for each topic separately. By making this a sub-document,
+                // the resulting field will be called 'topic_<topicNr>.<record header>' and thus make it possible
+                // to query documents depending on their topic
+                final Document gsInfoByTopic = new Document();
+                for (String header : gsHeaderMap.keySet()) {
+                    if (unwantedGsFields.contains(header) || StringUtils.isBlank(header))
+                        continue;
+                    gsInfoByTopic.addField(header, record.get(header));
+                }
+                document.addField("topic_" + record.get("trec_topic_number"), gsInfoByTopic);
             }
         }
     }
 
-    /**
-     * We do this to reproduce the behavior of the parsing algorithm of Michel's TREC-PM-17 coworker where only the last abstract section was used in structured abstracts.
-     *
-     * @param jCas
-     * @param document
-     */
-    private void addLastAbstractSectionOrFullAbstract(JCas jCas, Document document) {
-        Collection<AbstractSection> sections = JCasUtil.select(jCas, AbstractSection.class);
-        if (sections.isEmpty()) {
-            JCasUtil.select(jCas, AbstractText.class).stream().findAny().ifPresent(anno -> document.addField("abstract_lastsection", anno.getCoveredText()));
-        } else {
-            Optional<AbstractSection> reduce = sections.stream().reduce((a, b) -> b);
-            if (reduce.isPresent()) {
-                AbstractSection lastSection = reduce.get();
-                AbstractSectionHeading heading = (AbstractSectionHeading) lastSection.getAbstractSectionHeading();
-                String nlmCategory = heading.getNlmCategory();
-                document.addField("lastAbstractSectionNlmCategory", nlmCategory);
-                document.addField("abstract_lastsection", lastSection.getCoveredText());
-            }
-        }
-    }
 
     private void addAbstractSections(JCas jCas, Document document) {
         Collection<AbstractSection> sections = JCasUtil.select(jCas, AbstractSection.class);
@@ -161,9 +152,6 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         }
     }
 
-    private void addDocumentSource(JCas jCas, Document document) {
-        document.addField("documentSource", "medline");
-    }
 
     private void addPublicationDate(JCas jCas, Document document) {
         Header header = JCasUtil.selectSingle(jCas, Header.class);
@@ -172,10 +160,6 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         document.addField("publicationDate", pubDate.getMonth() + " " + pubDate.getYear());
     }
 
-    private void addPmid(JCas jCas, Document document) {
-        String pmid = JCoReTools.getDocId(jCas);
-        document.addField("pubmedId", pmid);
-    }
 
     private void addMeshTags(JCas jCas, Document document) {
         Collection<MeshHeading> meshHeadings = JCasUtil.select(jCas, MeshHeading.class);
@@ -195,15 +179,30 @@ public class Trec2018FieldGenerator extends FieldGenerator {
         document.addField("meshMinor", minorTopicHeadings);
     }
 
-    private void addFullAbstract(JCas jCas, Document document) {
-        Collection<AbstractText> abstractAnnotation = JCasUtil.select(jCas, AbstractText.class);
-        abstractAnnotation.stream().findFirst().ifPresent(abstractText -> document.addField("abstract", abstractText.getCoveredText()));
+
+    private void addDocumentSource(JCas jCas, Document document) {
+        String source = "PUBMED";
+        if (document.getId().toUpperCase().contains("ASCO"))
+            source = "ASCO";
+        if (document.getId().toUpperCase().contains("AACR"))
+            source = "AACR";
+        document.addField("documentSource", source);
+    }
+
+    private void addDocId(JCas jCas, Document document) {
+        String pmid = JCoReTools.getDocId(jCas);
+        document.addField("pubmedId", pmid);
+        document.setId(pmid);
+    }
+
+
+    private void addAbstract(JCas jCas, Document document) {
+        Collection<AbstractText> titles = JCasUtil.select(jCas, AbstractText.class);
+        titles.stream().findFirst().ifPresent(abstractText -> document.addField("abstract", abstractText.getCoveredText()));
     }
 
     private void addTitle(JCas jCas, Document document) {
         Collection<Title> titles = JCasUtil.select(jCas, Title.class);
         titles.stream().findFirst().ifPresent(title -> document.addField("title", title.getCoveredText()));
     }
-
-
 }

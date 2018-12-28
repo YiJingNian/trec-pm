@@ -1,4 +1,4 @@
-<configuration>
+<configuration scan="true">
 
 	<appender name="STXOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 

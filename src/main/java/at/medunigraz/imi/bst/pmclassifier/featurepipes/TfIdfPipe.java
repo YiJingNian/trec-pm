@@ -13,8 +13,13 @@ public class TfIdfPipe extends Pipe {
         TFIDF tfidf = InstancePreparator.getInstance().getTfidf();
         assert tfidf != null : "The TFIDF model has not been trained.";
         Token token = (Token) inst.getData();
-        tfidf.prepare(token.getText());
-        com.wcohen.ss.api.Token[] tokens = tfidf.getTokens();
+        com.wcohen.ss.api.Token[] tokens;
+        // Synchronization is required because the InstancePreparator is static and thus, the TFIDF object
+        // is the same for all threads and it is not thread safe (found out the hard way)
+        synchronized (tfidf) {
+            tfidf.prepare(token.getText());
+            tokens = tfidf.getTokens();
+        }
         for (com.wcohen.ss.api.Token tfidfToken : tokens)
             token.setFeatureValue(tfidfToken.getValue(), tfidf.getWeight(tfidfToken));
         return inst;

@@ -41,9 +41,21 @@ public class ExperimentsBuilder {
         return this;
     }
 
+    public ExperimentsBuilder withTemplate(File template, String... properties) {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new TemplateQueryDecorator(template, previousDecorator, array2Map(properties)));
+        return this;
+    }
+
     public ExperimentsBuilder withSubTemplate(File template) {
         Query previousDecorator = buildingExp.getDecorator();
         buildingExp.setDecorator(new SubTemplateQueryDecorator(template, previousDecorator));
+        return this;
+    }
+
+    public ExperimentsBuilder withSubTemplate(File template, String... properties) {
+        Query previousDecorator = buildingExp.getDecorator();
+        buildingExp.setDecorator(new SubTemplateQueryDecorator(template, previousDecorator, array2Map(properties)));
         return this;
     }
 
@@ -152,6 +164,17 @@ public class ExperimentsBuilder {
             this.experiments.add(buildingExp);
             return;
         }
+    }
 
+    private Map<String, String> array2Map(String[] mapItems) {
+        Map<String, String> map = new HashMap<>();
+        for (int i = 0; i < mapItems.length; i++) {
+            if (i % 2 == 1) {
+                String key = mapItems[i - 1];
+                String value = mapItems[i];
+                map.put(key, value);
+            }
+        }
+        return map;
     }
 }

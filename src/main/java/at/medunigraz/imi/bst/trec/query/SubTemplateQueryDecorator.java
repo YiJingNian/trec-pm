@@ -6,7 +6,9 @@ import joptsimple.internal.Strings;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,7 +33,11 @@ public class SubTemplateQueryDecorator extends TemplateQueryDecorator {
     private static final String FIELD_SEPARATOR = ", ";
 
     public SubTemplateQueryDecorator(File template, Query decoratedQuery) {
-        super(template, decoratedQuery);
+        this(template, decoratedQuery, Collections.emptyMap());
+    }
+
+    public SubTemplateQueryDecorator(File template, Query decoratedQuery, Map<String, String> properties) {
+        super(template, decoratedQuery, properties);
     }
 
     @Override

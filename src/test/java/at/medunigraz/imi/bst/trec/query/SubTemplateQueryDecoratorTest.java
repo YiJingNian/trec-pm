@@ -5,6 +5,8 @@ import at.medunigraz.imi.bst.trec.model.Topic;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,6 +36,33 @@ public class SubTemplateQueryDecoratorTest extends QueryDecoratorTest {
 		decoratedQuery.query(topic);
 		actual = decoratedQuery.getJSONQuery();
 		expected = String.format("{\"match\":{\"title\":\"%s\"}}", DISEASE_2);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testUseTopicNumberInTemplate() {
+		File template = new File(getClass().getResource("/templates/topicnumber-template.json").getFile());
+		Query decoratedQuery = new SubTemplateQueryDecorator(template, new DummyElasticSearchQuery());
+
+		topic.withNumber(42);
+		decoratedQuery.query(topic);
+		String actual = decoratedQuery.getJSONQuery();
+		String expected = "{\"match\":{\"topic_42\": \"searchterm\"}}";
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testTemplateProperties() {
+		File template = new File(getClass().getResource("/templates/template-properties.json").getFile());
+		Map<String, String> properties = new HashMap<>();
+		properties.put("prop1", "value1");
+		properties.put("prop2", "value2");
+		Query decoratedQuery = new SubTemplateQueryDecorator(template, new DummyElasticSearchQuery(), properties);
+
+		topic.withNumber(42);
+		decoratedQuery.query(topic);
+		String actual = decoratedQuery.getJSONQuery();
+		String expected = "{\"match\":{\"value1\": \"value2\"}}";
 		assertEquals(expected, actual);
 	}
 

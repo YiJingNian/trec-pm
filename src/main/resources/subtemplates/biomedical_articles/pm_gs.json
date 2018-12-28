@@ -1,0 +1,18 @@
+{
+  "bool": {
+    "should": [
+        {"term": {
+          "topic_{{number}}.pm_rel_desc.keyword": {
+          "value": "Human PM",
+          "boost": {{boost}}
+          }
+        }},
+        {"term": {
+          "topic_{{number}}.pm_rel_desc.keyword": {
+            "value": "Animal PM",
+            "boost": {{boost}}
+          }
+        }}
+      ]
+  }
+}

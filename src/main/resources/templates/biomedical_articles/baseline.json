@@ -1,0 +1,8 @@
+{
+	"bool": {
+		"must": [
+			{{biomedical_articles/disease.json}},
+			{{biomedical_articles/gene.json}}
+		]
+	}
+}

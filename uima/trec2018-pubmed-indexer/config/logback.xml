@@ -1,4 +1,4 @@
-<configuration scan="true">
+<configuration scan="true" scanPeriod="10s">
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
@@ -9,7 +9,7 @@
 		</encoder>
 	</appender>
 
-	<root level="WARN">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

@@ -148,7 +148,7 @@
             <nameValuePair>
                 <name>BatchSize</name>
                 <value>
-                    <integer>50</integer>
+                    <integer>500</integer>
                 </value>
             </nameValuePair>
             <nameValuePair>

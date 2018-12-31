@@ -5,14 +5,14 @@
     <parent>
         <artifactId>trec2018-uima-components</artifactId>
         <groupId>de.julielab</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.julielab</groupId>
     <artifactId>jcore-trec2018-preprocessing</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     
 </project>

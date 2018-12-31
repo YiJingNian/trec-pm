@@ -160,7 +160,7 @@
             <nameValuePair>
                 <name>Table</name>
                 <value>
-                    <string>sigir.preprocessing_all</string>
+                    <string>gsdocs</string>
                 </value>
             </nameValuePair>
             <nameValuePair>

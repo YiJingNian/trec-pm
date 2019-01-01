@@ -10,7 +10,11 @@ public class TfIdfPipe extends Pipe {
 
     @Override
     public Instance pipe(Instance inst) {
-        TFIDF tfidf = InstancePreparator.getInstance().getTfidf();
+        final InstancePreparator instancePreparator = InstancePreparator.getInstance();
+        TFIDF tfidf;
+        synchronized (instancePreparator) {
+            tfidf = instancePreparator.getTfidf();
+        }
         assert tfidf != null : "The TFIDF model has not been trained.";
         Token token = (Token) inst.getData();
         com.wcohen.ss.api.Token[] tokens;

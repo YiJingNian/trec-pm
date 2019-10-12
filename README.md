@@ -67,6 +67,7 @@ cat out.txt | grep -e "\(^[0-9\.]*\)\(\;.*\)\(with.*\)\(\\[.*\\]\)\(.*\)" | sed 
 ```
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/00d52e98173d4629be22a4224a48a223)](https://www.codacy.com/app/michelole/trec-pm)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hpi-dhc-at-trec-2018-precision-medicine-track/information-retrieval-on-trec-pm)](https://paperswithcode.com/sota/information-retrieval-on-trec-pm?p=hpi-dhc-at-trec-2018-precision-medicine-track)
 [![Build Status](https://travis-ci.com/bst-mug/trec-pm.svg?branch=master)](https://travis-ci.com/bst-mug/trec-pm)
 [![Coverage Status](https://coveralls.io/repos/github/bst-mug/trec-pm/badge.svg?branch=master)](https://coveralls.io/github/bst-mug/trec-pm?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

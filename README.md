@@ -1,22 +1,33 @@
 # TREC-PM (Precision Medicine)
 
-A repository containing support code and resources initially developed at the [Institute for Medical Informatics, Statistics and Documentation at the Medical University of Graz (Austria)](https://www.medunigraz.at/imi/en/) for participation at the [2017 TREC Precision Medicine Track](http://trec-cds.appspot.com/2017.html). For further information on this track and the final results please check the official [TREC-PM 2017 overview paper](https://trec.nist.gov/pubs/trec26/papers/Overview-PM.pdf). Team name: **imi_mug**
+**NOTE** Maintenance of this project has moved to the [JULIE Lab](https://github.com/JULIELab/trec-pm).
 
-It was then further improved for participation at the [2018 TREC Precision Medicine Track](http://trec-cds.appspot.com/2018.html), team: **dhc-hpi**. Improvements include: support for subtemplates and the possibility to use disjunctive queries (_dis\_max_) allowing e.g. synonyms and hypernyms to have different weights.
+A repository containing support code and resources initially developed at the [Institute for Medical Informatics, Statistics and Documentation at the Medical University of Graz (Austria)](https://www.medunigraz.at/imi/en/) for participation at the [2017 TREC Precision Medicine Track](http://trec-cds.appspot.com/2017.html). For further information on this track and the final results please check the official [TREC-PM 2017 overview paper](https://trec.nist.gov/pubs/trec26/papers/Overview-PM.pdf). Team name: **imi_mug**.
 
-If you use data or code in your work, please cite our [TREC 2017 proceedings paper](https://trec.nist.gov/pubs/trec26/papers/imi_mug-PM.pdf):
+It was then further improved for participation at the [2018 TREC Precision Medicine Track](http://trec-cds.appspot.com/2018.html). Improvements include: support for subtemplates and the possibility to use disjunctive queries (_dis\_max_) allowing e.g. synonyms and hypernyms to have different weights. Team name: **hpi-dhc**.
+
+## Citing
+
+If you use `imi_mug`'s original data or code in your work, please cite their [TREC 2017 proceedings paper](https://trec.nist.gov/pubs/trec26/papers/imi_mug-PM.pdf):
 
 *TREC 2017 Precision Medicine - Medical University of Graz. Pablo López-García, Michel Oleynik, Zdenko Kasáč and Stefan Schulz. Text REtrieval Conference, Gaithersburg, MD. 2017. Available at https://trec.nist.gov/pubs/trec26/papers/imi_mug-PM.pdf.*
 
-The complete TREC 2017 proceedings are available [here](https://trec.nist.gov/pubs/trec26/trec2017.html).
+If you use any of the improvements mentioned above, please also cite our [TREC 2018 proceedings paper](https://trec.nist.gov/pubs/trec27/papers/hpi-dhc-PM.pdf):
 
-Also of interest:
+*HPI-DHC at TREC 2018 Precision Medicine Track. Michel Oleynik, Erik Faessler, Ariane Morassi Sasso, et. al. Text REtrieval Conference, Gaithersburg, MD. 2018. Available at https://trec.nist.gov/pubs/trec27/papers/hpi-dhc-PM.pdf.*
 
-* [Our TREC 2017 presentation slides](https://github.com/bst-mug/trec2017/blob/master/docs/presentation.pdf)
-* [Our TREC 2017 Poster](https://github.com/bst-mug/trec2017/blob/master/docs/poster.pdf)
-* [Our TREC 2018 presentation slides](https://github.com/hpi-dhc/trec-pm/blob/master/docs/2018/presentation.pdf)
-* [Our TREC 2018 Poster](https://github.com/hpi-dhc/trec-pm/blob/master/docs/2018/poster.pdf)
-* [Our TREC 2018 Data Artifacts](https://figshare.com/projects/TREC_PM_2018_Data_hpi-dhc_/56882)
+## Other resources
+
+### 2017
+* [imi_mug TREC 2017 presentation slides](https://github.com/bst-mug/trec2017/blob/master/docs/presentation.pdf)
+* [imi_mug TREC 2017 Poster](https://github.com/bst-mug/trec2017/blob/master/docs/poster.pdf)
+* [TREC 2017 proceedings](https://trec.nist.gov/pubs/trec26/trec2017.html).
+
+### 2018
+* [hpi_dhc TREC 2018 presentation slides](https://github.com/hpi-dhc/trec-pm/blob/master/docs/2018/presentation.pdf)
+* [hpi_dhc TREC 2018 Poster](https://github.com/hpi-dhc/trec-pm/blob/master/docs/2018/poster.pdf)
+* [hpi_dhc TREC 2018 Data Artifacts](https://figshare.com/projects/TREC_PM_2018_Data_hpi-dhc_/56882)
+* [TREC 2018 proceedings](https://trec.nist.gov/pubs/trec27/trec2018.html).
 
 ## Code Dependencies
 
@@ -56,6 +67,7 @@ cat out.txt | grep -e "\(^[0-9\.]*\)\(\;.*\)\(with.*\)\(\\[.*\\]\)\(.*\)" | sed 
 ```
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/00d52e98173d4629be22a4224a48a223)](https://www.codacy.com/app/michelole/trec-pm)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/hpi-dhc-at-trec-2018-precision-medicine-track/information-retrieval-on-trec-pm)](https://paperswithcode.com/sota/information-retrieval-on-trec-pm?p=hpi-dhc-at-trec-2018-precision-medicine-track)
 [![Build Status](https://travis-ci.com/bst-mug/trec-pm.svg?branch=master)](https://travis-ci.com/bst-mug/trec-pm)
 [![Coverage Status](https://coveralls.io/repos/github/bst-mug/trec-pm/badge.svg?branch=master)](https://coveralls.io/github/bst-mug/trec-pm?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
